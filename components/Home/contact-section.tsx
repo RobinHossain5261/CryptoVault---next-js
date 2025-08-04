@@ -1,13 +1,19 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState, useRef, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   ArrowRight,
   Mail,
@@ -18,7 +24,7 @@ import {
   CheckCircle,
   AlertCircle,
   ExternalLink,
-} from "lucide-react"
+} from "lucide-react";
 
 // Social/Community links data
 const socialLinks = [
@@ -70,7 +76,7 @@ const socialLinks = [
     bgColor: "from-blue-500/20 to-blue-600/20",
     members: "10K+",
   },
-]
+];
 
 // Contact information
 const contactInfo = {
@@ -79,7 +85,7 @@ const contactInfo = {
   email: "contact@ironik.io",
   supportEmail: "support@ironik.io",
   businessHours: "24/7 Support Available",
-}
+};
 
 // Subject options for the dropdown
 const subjectOptions = [
@@ -89,10 +95,18 @@ const subjectOptions = [
   { value: "token", label: "Token Purchase" },
   { value: "media", label: "Media & Press" },
   { value: "business", label: "Business Development" },
-]
+];
 
 // Floating particles component
-function FloatingParticle({ delay, size, color }: { delay: number; size: number; color: string }) {
+function FloatingParticle({
+  delay,
+  size,
+  color,
+}: {
+  delay: number;
+  size: number;
+  color: string;
+}) {
   return (
     <div
       className={`absolute rounded-full ${color} animate-pulse opacity-20`}
@@ -105,7 +119,7 @@ function FloatingParticle({ delay, size, color }: { delay: number; size: number;
         animationDuration: `${3 + Math.random() * 4}s`,
       }}
     />
-  )
+  );
 }
 
 // Toast notification component
@@ -114,17 +128,22 @@ function Toast({
   type,
   isVisible,
   onClose,
-}: { message: string; type: "success" | "error"; isVisible: boolean; onClose: () => void }) {
+}: {
+  message: string;
+  type: "success" | "error";
+  isVisible: boolean;
+  onClose: () => void;
+}) {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
-        onClose()
-      }, 5000)
-      return () => clearTimeout(timer)
+        onClose();
+      }, 5000);
+      return () => clearTimeout(timer);
     }
-  }, [isVisible, onClose])
+  }, [isVisible, onClose]);
 
-  if (!isVisible) return null
+  if (!isVisible) return null;
 
   return (
     <div className="fixed top-6 right-6 z-50 animate-in slide-in-from-right duration-300">
@@ -141,12 +160,15 @@ function Toast({
           <AlertCircle className="w-6 h-6 text-red-400" />
         )}
         <span className="font-medium">{message}</span>
-        <button onClick={onClose} className="ml-2 text-gray-400 hover:text-white transition-colors">
+        <button
+          onClick={onClose}
+          className="ml-2 text-gray-400 hover:text-white transition-colors"
+        >
           ×
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 // Enhanced contact form component
@@ -156,83 +178,87 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
     email: "",
     subject: "",
     message: "",
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error"; isVisible: boolean }>({
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+    isVisible: boolean;
+  }>({
     message: "",
     type: "success",
     isVisible: false,
-  })
+  });
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
+    const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required"
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Message is required"
+      newErrors.message = "Message is required";
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters long"
+      newErrors.message = "Message must be at least 10 characters long";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!validateForm()) {
       setToast({
         message: "Please fix the errors in the form",
         type: "error",
         isVisible: true,
-      })
-      return
+      });
+      return;
     }
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     // Simulate API call
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       setToast({
         message: "✅ Message sent successfully! We'll get back to you soon.",
         type: "success",
         isVisible: true,
-      })
+      });
 
       // Reset form
-      setFormData({ name: "", email: "", subject: "", message: "" })
-      setErrors({})
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setErrors({});
     } catch (error) {
       setToast({
         message: "Failed to send message. Please try again.",
         type: "error",
         isVisible: true,
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }))
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
-  }
+  };
 
   return (
     <>
@@ -248,7 +274,7 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
           isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
         }`}
       >
-        <Card className="relative bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-xl border-2 border-gray-700/30 hover:border-purple-400/50 transition-all duration-500 overflow-hidden">
+        <Card className="relative bg-[#160e23] backdrop-blur-xl border-2 border-gray-700/30 hover:border-purple-400/50 transition-all duration-500 overflow-hidden">
           {/* Background pattern */}
           <div className="absolute inset-0 opacity-5">
             <div
@@ -260,7 +286,7 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
             />
           </div>
 
-          <CardContent className="relative z-10 p-8 lg:p-10">
+          <CardContent className="relative z-10 p-4 md:p-8">
             <div className="space-y-8">
               {/* Form header */}
               <div className="space-y-4">
@@ -269,8 +295,12 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
                     <Send className="w-6 h-6 text-purple-300" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">Send us a Message</h3>
-                    <p className="text-gray-400">We'll respond within 24 hours</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-white">
+                      Send us a Message
+                    </h3>
+                    <p className="text-gray-400">
+                      We'll respond within 24 hours
+                    </p>
                   </div>
                 </div>
               </div>
@@ -279,13 +309,15 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name field */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-300">Full Name *</label>
+                  <label className="text-sm font-semibold text-gray-300">
+                    Full Name *
+                  </label>
                   <Input
                     type="text"
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    className={`bg-gray-800/50 border-2 transition-all duration-300 focus:bg-gray-800/70 ${
+                    className={`bg-gray-800/50 border-2 transition-all duration-300 text-white outline-none ${
                       errors.name
                         ? "border-red-400/60 focus:border-red-400 shadow-lg shadow-red-500/25"
                         : "border-gray-600/50 focus:border-purple-400/60 focus:shadow-lg focus:shadow-purple-500/25"
@@ -301,13 +333,15 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
 
                 {/* Email field */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-300">Email Address *</label>
+                  <label className="text-sm font-semibold text-gray-300">
+                    Email Address *
+                  </label>
                   <Input
                     type="email"
                     placeholder="your.email@example.com"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={`bg-gray-800/50 border-2 transition-all duration-300 focus:bg-gray-800/70 ${
+                    className={`bg-gray-800/50 border-2 transition-all duration-300 text-white focus:bg-gray-800/70 ${
                       errors.email
                         ? "border-red-400/60 focus:border-red-400 shadow-lg shadow-red-500/25"
                         : "border-gray-600/50 focus:border-purple-400/60 focus:shadow-lg focus:shadow-purple-500/25"
@@ -323,14 +357,25 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
 
                 {/* Subject field */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-300">Subject</label>
-                  <Select value={formData.subject} onValueChange={(value) => handleInputChange("subject", value)}>
-                    <SelectTrigger className="bg-gray-800/50 border-2 border-gray-600/50 focus:border-purple-400/60 focus:shadow-lg focus:shadow-purple-500/25 transition-all duration-300">
+                  <label className="text-sm font-semibold text-gray-300">
+                    Subject
+                  </label>
+                  <Select
+                    value={formData.subject}
+                    onValueChange={(value) =>
+                      handleInputChange("subject", value)
+                    }
+                  >
+                    <SelectTrigger className="text-white bg-gray-800/50 border-2 border-gray-600/50 focus:border-purple-400/60 focus:shadow-lg focus:shadow-purple-500/25 transition-all duration-300">
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-900 border-gray-600">
+                    <SelectContent className="text-gray-200 bg-gray-900 border-gray-600">
                       {subjectOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value} className="focus:bg-gray-800">
+                        <SelectItem
+                          key={option.value}
+                          value={option.value}
+                          className="focus:bg-gray-800 hover:text-gray-200"
+                        >
                           {option.label}
                         </SelectItem>
                       ))}
@@ -340,13 +385,17 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
 
                 {/* Message field */}
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-300">Message *</label>
+                  <label className="text-sm font-semibold text-gray-300">
+                    Message *
+                  </label>
                   <Textarea
                     placeholder="Tell us how we can help you..."
                     rows={5}
                     value={formData.message}
-                    onChange={(e) => handleInputChange("message", e.target.value)}
-                    className={`bg-gray-800/50 border-2 transition-all duration-300 focus:bg-gray-800/70 resize-none ${
+                    onChange={(e) =>
+                      handleInputChange("message", e.target.value)
+                    }
+                    className={`text-gray-200 bg-gray-800/50 border-2 transition-all duration-300 focus:bg-gray-800/70 resize-none ${
                       errors.message
                         ? "border-red-400/60 focus:border-red-400 shadow-lg shadow-red-500/25"
                         : "border-gray-600/50 focus:border-purple-400/60 focus:shadow-lg focus:shadow-purple-500/25"
@@ -358,7 +407,9 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
                       <span>{errors.message}</span>
                     </p>
                   )}
-                  <p className="text-xs text-gray-500">{formData.message.length}/500 characters</p>
+                  <p className="text-xs text-gray-500">
+                    {formData.message.length}/500 characters
+                  </p>
                 </div>
 
                 {/* Submit button */}
@@ -388,21 +439,21 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
         </Card>
       </div>
     </>
-  )
+  );
 }
 
 // Contact information component
 function ContactInfo({ isVisible }: { isVisible: boolean }) {
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null)
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
 
   return (
     <div
-      className={`space-y-8 transition-all duration-1000 delay-300 ${
+      className={`space-y-6 transition-all duration-1000 delay-300 ${
         isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
       }`}
     >
       {/* Contact details card */}
-      <Card className="relative bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-xl border-2 border-gray-700/30 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden">
+      <Card className="relative bg-[#160e23] from-gray-900/60 to-black/60 backdrop-blur-xl border-2 border-gray-700/30 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -414,7 +465,7 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
           />
         </div>
 
-        <CardContent className="relative z-10 p-8 lg:p-10">
+        <CardContent className="relative z-10 p-4 md:p-8">
           <div className="space-y-8">
             {/* Header */}
             <div className="space-y-4">
@@ -423,7 +474,9 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   <Mail className="w-6 h-6 text-cyan-300" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">Contact Information</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-white">
+                    Contact Information
+                  </h3>
                   <p className="text-gray-400">Reach out through any channel</p>
                 </div>
               </div>
@@ -440,7 +493,9 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   <h4 className="text-lg font-semibold text-white group-hover:text-purple-200 transition-colors">
                     Address
                   </h4>
-                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">{contactInfo.address}</p>
+                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">
+                    {contactInfo.address}
+                  </p>
                 </div>
               </div>
 
@@ -453,7 +508,9 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   <h4 className="text-lg font-semibold text-white group-hover:text-green-200 transition-colors">
                     Phone
                   </h4>
-                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">{contactInfo.phone}</p>
+                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">
+                    {contactInfo.phone}
+                  </p>
                 </div>
               </div>
 
@@ -466,8 +523,12 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   <h4 className="text-lg font-semibold text-white group-hover:text-blue-200 transition-colors">
                     Email
                   </h4>
-                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">{contactInfo.email}</p>
-                  <p className="text-sm text-gray-400">Support: {contactInfo.supportEmail}</p>
+                  <p className="text-gray-300 group-hover:text-gray-200 transition-colors">
+                    {contactInfo.email}
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Support: {contactInfo.supportEmail}
+                  </p>
                 </div>
               </div>
 
@@ -491,17 +552,21 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
       </Card>
 
       {/* Social links card */}
-      <Card className="relative bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-xl border-2 border-gray-700/30 hover:border-green-400/50 transition-all duration-500 overflow-hidden">
-        <CardContent className="relative z-10 p-8 lg:p-10">
+      <Card className="relative bg-[#160e23] from-gray-900/60 to-black/60 backdrop-blur-xl border-2 border-gray-700/30 hover:border-green-400/50 transition-all duration-500 overflow-hidden">
+        <CardContent className="relative z-10 p-4 md:p-8">
           <div className="space-y-6">
             {/* Header */}
             <div className="space-y-2">
-              <h3 className="text-2xl font-bold text-white">Join Our Community</h3>
-              <p className="text-gray-400">Connect with us on social platforms</p>
+              <h3 className="text-xl md:text-2xl font-bold text-white">
+                Join Our Community
+              </h3>
+              <p className="text-gray-400">
+                Connect with us on social platforms
+              </p>
             </div>
 
             {/* Social links grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid  sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
               {socialLinks.map((social, index) => (
                 <a
                   key={social.name}
@@ -513,15 +578,29 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   onMouseLeave={() => setHoveredSocial(null)}
                 >
                   <div
-                    className={`relative p-4 bg-gradient-to-br ${social.bgColor} border-2 border-gray-600/30 rounded-xl transition-all duration-300 hover:scale-105 hover:border-opacity-60 ${
+                    className={`relative p-4 bg-gradient-to-br ${
+                      social.bgColor
+                    } border-2 border-gray-600/30 rounded-xl transition-all duration-300 hover:scale-105 hover:border-opacity-60 ${
                       hoveredSocial === social.name
-                        ? `hover:border-${social.color.split("-")[1]}-400/60 hover:shadow-lg`
+                        ? `hover:border-${
+                            social.color.split("-")[1]
+                          }-400/60 hover:shadow-lg`
                         : ""
                     }`}
                     style={{
                       borderColor:
                         hoveredSocial === social.name
-                          ? `rgba(${social.color.includes("blue") ? "59, 130, 246" : social.color.includes("purple") ? "139, 92, 246" : social.color.includes("green") ? "16, 185, 129" : social.color.includes("red") ? "239, 68, 68" : "156, 163, 175"}, 0.6)`
+                          ? `rgba(${
+                              social.color.includes("blue")
+                                ? "59, 130, 246"
+                                : social.color.includes("purple")
+                                ? "139, 92, 246"
+                                : social.color.includes("green")
+                                ? "16, 185, 129"
+                                : social.color.includes("red")
+                                ? "239, 68, 68"
+                                : "156, 163, 175"
+                            }, 0.6)`
                           : undefined,
                     }}
                   >
@@ -537,16 +616,22 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                       <div className="flex-1 min-w-0">
                         <h4
                           className={`font-semibold transition-colors ${
-                            hoveredSocial === social.name ? "text-white" : "text-gray-300"
+                            hoveredSocial === social.name
+                              ? "text-white"
+                              : "text-gray-300"
                           }`}
                         >
                           {social.name}
                         </h4>
-                        <p className="text-sm text-gray-400">{social.members} members</p>
+                        <p className="text-sm text-gray-400">
+                          {social.members} members
+                        </p>
                       </div>
                       <ExternalLink
                         className={`w-4 h-4 transition-all duration-300 ${
-                          hoveredSocial === social.name ? "text-white translate-x-1" : "text-gray-500"
+                          hoveredSocial === social.name
+                            ? "text-white translate-x-1"
+                            : "text-gray-500"
                         }`}
                       />
                     </div>
@@ -568,32 +653,35 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
         </div>
       </Button>
     </div>
-  )
+  );
 }
 
 export default function ContactSection() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative py-20 lg:py-32 bg-black overflow-hidden"
+    >
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-black to-blue-900/15" />
@@ -622,9 +710,13 @@ export default function ContactSection() {
             delay={i * 0.3}
             size={Math.random() * 8 + 4}
             color={
-              ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-pink-400", "bg-cyan-400"][
-                Math.floor(Math.random() * 5)
-              ]
+              [
+                "bg-purple-400",
+                "bg-blue-400",
+                "bg-green-400",
+                "bg-pink-400",
+                "bg-cyan-400",
+              ][Math.floor(Math.random() * 5)]
             }
           />
         ))}
@@ -642,11 +734,15 @@ export default function ContactSection() {
         />
         <div
           className="absolute w-full h-px bg-gradient-to-r from-transparent via-green-400/30 to-transparent animate-pulse"
-          style={{ top: "80%", animationDelay: "1.5s", animationDuration: "6s" }}
+          style={{
+            top: "80%",
+            animationDelay: "1.5s",
+            animationDuration: "6s",
+          }}
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 lg:px-12">
+      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-12">
         {/* Section header */}
         <div
           className={`text-center mb-16 transition-all duration-1000 ${
@@ -655,13 +751,13 @@ export default function ContactSection() {
         >
           <div className="inline-flex items-center space-x-4 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-purple-400" />
-            <span className="text-purple-300 text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
-              📬 Get in Touch
+            <span className="text-purple-300 text-sm md:text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
+              Get in Touch
             </span>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
 
-          <h2 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
               Let's Connect &
             </span>
@@ -670,7 +766,8 @@ export default function ContactSection() {
           </h2>
 
           <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed">
-            Have questions or want to connect? We'd love to hear from you and explore opportunities together.
+            Have questions or want to connect? We'd love to hear from you and
+            explore opportunities together.
           </p>
 
           {/* Animated pulsing dot grid */}
@@ -688,8 +785,9 @@ export default function ContactSection() {
         </div>
 
         {/* Main content grid */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-2 gap-6  xl:gap-12">
           {/* Left column - Contact form */}
+
           <ContactForm isVisible={isVisible} />
 
           {/* Right column - Contact info */}
@@ -698,24 +796,30 @@ export default function ContactSection() {
 
         {/* Bottom CTA */}
         <div
-          className={`text-center mt-16 transition-all duration-1000 delay-700 ${
+          className={`text-center mt-8 md:mt-16 transition-all duration-1000 delay-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center space-x-6 px-10 py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
-            <div className="flex items-center space-x-3">
+          <div className="inline-flex flex-wrap items-center gap-3 md:gap-6 px-5 md:px-10 py-3 md:py-6 bg-[#160e23] backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
-              <span className="text-gray-200 text-base font-semibold">Response within 24 hours</span>
+              <span className="text-gray-200 text-base font-semibold">
+                Response within 24 hours
+              </span>
             </div>
-            <div className="w-px h-6 bg-gray-500" />
-            <div className="flex items-center space-x-3">
+            <div className="w-px h-6 bg-gray-500 hidden lg:block" />
+            <div className="flex items-center gap-2 sm:gap-3">
               <MessageCircle className="w-5 h-5 text-blue-400" />
-              <span className="text-gray-200 text-base font-semibold">24/7 Community Support</span>
+              <span className="text-gray-200 text-base font-semibold">
+                24/7 Community Support
+              </span>
             </div>
-            <div className="w-px h-6 bg-gray-500" />
-            <div className="flex items-center space-x-3">
+            <div className="w-px h-6 bg-gray-500 hidden lg:block" />
+            <div className="flex items-center gap-2 sm:gap-3">
               <Mail className="w-5 h-5 text-purple-400" />
-              <span className="text-gray-200 text-base font-semibold">Secure Communication</span>
+              <span className="text-gray-200 text-base font-semibold">
+                Secure Communication
+              </span>
             </div>
           </div>
         </div>
@@ -726,5 +830,5 @@ export default function ContactSection() {
       <div className="absolute bottom-0 right-1/4 w-96 h-40 bg-gradient-to-t from-blue-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-40 bg-gradient-to-t from-green-600/15 to-transparent blur-3xl" />
     </section>
-  )
+  );
 }

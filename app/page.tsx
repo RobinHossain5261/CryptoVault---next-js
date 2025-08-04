@@ -12,12 +12,12 @@ export default function Page() {
     <>
       {/* <CryptoHero /> */}
       <TokenSaleSection />
-      {/* <MarqueeSection /> */}
-      {/* <FeaturesSection /> */}
-      {/* <RoadmapSection /> */}
-      {/* <FAQSection /> */}
+      <MarqueeSection />
+      <FeaturesSection />
+      <RoadmapSection />
+      <FAQSection />
       {/* <BlogSection /> */}
-      {/* <ContactSection />    */}
+      <ContactSection />   
     </>
   );
 }

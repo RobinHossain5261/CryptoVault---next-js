@@ -5,100 +5,21 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calendar, User, TrendingUp, Shield, Zap, Globe, Clock } from "lucide-react"
-
-// Blog data with realistic crypto/ICO content
-const blogData = [
-  {
-    id: 1,
-    title: "How Blockchain is Redefining Financial Security",
-    excerpt:
-      "Explore the revolutionary impact of blockchain technology on traditional financial systems and security protocols.",
-    category: "Insights",
-    categoryColor: "from-purple-400 to-blue-400",
-    categoryBg: "from-purple-500/20 to-blue-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "Sarah Chen",
-    date: "Dec 28, 2024",
-    readTime: "5 min read",
-    featured: true,
-    icon: Shield,
-  },
-  {
-    id: 2,
-    title: "Phase 2 of Our ICO is Live: What You Need to Know",
-    excerpt:
-      "Everything you need to know about our Phase 2 token sale, including new features, bonuses, and investment opportunities.",
-    category: "News",
-    categoryColor: "from-green-400 to-emerald-400",
-    categoryBg: "from-green-500/20 to-emerald-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "Michael Rodriguez",
-    date: "Dec 26, 2024",
-    readTime: "3 min read",
-    featured: false,
-    icon: TrendingUp,
-  },
-  {
-    id: 3,
-    title: "Top 5 Crypto Trends to Watch in 2025",
-    excerpt: "Discover the emerging trends that will shape the cryptocurrency landscape in the coming year.",
-    category: "Update",
-    categoryColor: "from-yellow-400 to-orange-400",
-    categoryBg: "from-yellow-500/20 to-orange-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "Alex Thompson",
-    date: "Dec 24, 2024",
-    readTime: "7 min read",
-    featured: false,
-    icon: Zap,
-  },
-  {
-    id: 4,
-    title: "DeFi Integration: Building the Future of Finance",
-    excerpt: "Learn how our platform integrates with major DeFi protocols to provide seamless financial services.",
-    category: "Insights",
-    categoryColor: "from-cyan-400 to-blue-400",
-    categoryBg: "from-cyan-500/20 to-blue-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "Emma Wilson",
-    date: "Dec 22, 2024",
-    readTime: "6 min read",
-    featured: false,
-    icon: Globe,
-  },
-  {
-    id: 5,
-    title: "Smart Contract Audit Results: Maximum Security Achieved",
-    excerpt: "Our comprehensive smart contract audit results are in, showcasing industry-leading security standards.",
-    category: "News",
-    categoryColor: "from-rose-400 to-pink-400",
-    categoryBg: "from-rose-500/20 to-pink-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "David Kim",
-    date: "Dec 20, 2024",
-    readTime: "4 min read",
-    featured: false,
-    icon: Shield,
-  },
-  {
-    id: 6,
-    title: "Community Milestone: 100K+ Token Holders Reached",
-    excerpt: "Celebrating our growing community and the incredible support from our token holders worldwide.",
-    category: "Update",
-    categoryColor: "from-indigo-400 to-purple-400",
-    categoryBg: "from-indigo-500/20 to-purple-500/20",
-    image: "/placeholder.svg?height=240&width=400",
-    author: "Lisa Park",
-    date: "Dec 18, 2024",
-    readTime: "2 min read",
-    featured: false,
-    icon: TrendingUp,
-  },
-]
+import { ArrowRight, TrendingUp, Zap, Clock } from "lucide-react"
+import Image from "next/image"
+import { blogData } from "@/public/fakeData/fateData"
+import Link from "next/link"
 
 // Floating particles component
-function FloatingParticle({ delay, size, color }: { delay: number; size: number; color: string }) {
+function FloatingParticle({
+  delay,
+  size,
+  color,
+}: {
+  delay: number
+  size: number
+  color: string
+}) {
   return (
     <div
       className={`absolute rounded-full ${color} animate-pulse opacity-20`}
@@ -115,7 +36,15 @@ function FloatingParticle({ delay, size, color }: { delay: number; size: number;
 }
 
 // Enhanced blog card component
-function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisible: boolean }) {
+function BlogCard({
+  blog,
+  index,
+  isVisible,
+}: {
+  blog: any
+  index: number
+  isVisible: boolean
+}) {
   const [isHovered, setIsHovered] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const cardRef = useRef<HTMLDivElement>(null)
@@ -135,12 +64,12 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
     <div
       className={`group transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      } ${blog.featured ? "lg:col-span-2 lg:row-span-2" : ""}`}
+      } ${blog.featured ? "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2" : ""}`}
       style={{ animationDelay: `${index * 200}ms` }}
     >
       <Card
         ref={cardRef}
-        className={`relative h-full bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-xl border-2 transition-all duration-700 overflow-hidden cursor-pointer ${
+        className={`relative h-full bg-[#160e23] from-gray-900/60 to-black/60 backdrop-blur-xl border-2 transition-all duration-700 overflow-hidden cursor-pointer ${
           isHovered
             ? "border-purple-400/60 shadow-2xl shadow-purple-500/25 scale-[1.02] -translate-y-2"
             : "border-gray-700/30 shadow-lg hover:border-gray-600/50"
@@ -180,16 +109,19 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
 
         <CardContent className="relative z-10 p-0 h-full flex flex-col">
           {/* Image section */}
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden h-48 md:h-64 lg:h-72">
+            {" "}
+            {/* Added fixed height for consistency */}
             <div
-              className={`aspect-video bg-gradient-to-br ${blog.categoryBg} transition-all duration-500 ${
+              className={`absolute inset-0 bg-gradient-to-br ${blog.categoryBg} transition-all duration-500 ${
                 isHovered ? "scale-110" : "scale-100"
               }`}
             >
-              <img
-                src={blog.image || "/placeholder.svg"}
+              <Image
+                src={blog?.image || "/placeholder.svg"}
                 alt={blog.title}
-                className={`w-full h-full object-cover transition-all duration-500 ${
+                fill // Use fill to cover the parent div
+                className={`object-cover transition-all duration-500 ${
                   isHovered ? "scale-110 brightness-110" : "scale-100"
                 }`}
               />
@@ -202,9 +134,8 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
                 <div className={`absolute inset-0 bg-gradient-to-br ${blog.categoryBg} opacity-20 mix-blend-overlay`} />
               )}
             </div>
-
             {/* Category badge */}
-            <div className="absolute top-4 left-4">
+            <div className="absolute top-4 left-4 z-20">
               <div
                 className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold border backdrop-blur-sm transition-all duration-300 ${
                   isHovered
@@ -216,18 +147,16 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
                 {blog.category}
               </div>
             </div>
-
             {/* Featured badge */}
             {blog.featured && (
-              <div className="absolute top-4 right-4">
+              <div className="absolute top-4 right-4 z-20">
                 <div className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold bg-gradient-to-r from-yellow-500/80 to-orange-500/80 text-white border border-yellow-400/50 backdrop-blur-sm">
                   ⭐ Featured
                 </div>
               </div>
             )}
-
             {/* Read time indicator */}
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-4 right-4 z-20">
               <div className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-black/60 text-gray-300 border border-gray-600/50 backdrop-blur-sm">
                 <Clock className="w-3 h-3 mr-1" />
                 {blog.readTime}
@@ -255,36 +184,43 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
               <p
                 className={`leading-relaxed transition-all duration-300 ${
                   blog.featured ? "text-lg" : "text-base"
-                } ${isHovered ? "text-gray-200" : "text-gray-300"}`}
-              >
-                {blog.excerpt}
-              </p>
-            </div>
+                } ${isHovered ? "text-gray-200" : "text-gray-300"} line-clamp-2\`} {/* Added line-clamp-2 */}\
+            >
+              {blog.excerpt}
+            </p>
+          </div>
 
-            {/* Footer */}
-            <div className="mt-6 space-y-4">
-              {/* Author and date */}
-              <div className="flex items-center justify-between text-sm text-gray-400">
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2">
-                    <User className="w-4 h-4" />
-                    <span className="font-medium">{blog.author}</span>
-                  </div>
-                  <div className="w-1 h-1 bg-gray-500 rounded-full" />
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>{blog.date}</span>
-                  </div>
+          {/* Footer */}
+          <div className="mt-6 space-y-4">
+            {/* Author and date */}
+            <div className="flex items-center justify-between text-sm text-gray-400">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={blog.authorAvatar || "/placeholder.svg?height=32&width=32&query=user avatar"}
+                  alt={blog.author}
+                  width={32}
+                  height={32}
+                  className="rounded-full object-cover"
+                />
+                <div className="flex items-center space-x-2">
+                  <User className="w-4 h-4" />
+                  <span className="font-medium">{blog.author}</span>
+                </div>
+                <div className="w-1 h-1 bg-gray-500 rounded-full" />
+                <div className="flex items-center space-x-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>{blog.date}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Divider */}
-              <div
-                className={`w-full h-px bg-gradient-to-r transition-all duration-500 ${
-                  isHovered
-                    ? `${blog.categoryColor.replace("from-", "from-").replace("to-", "to-")}/50 opacity-100`
-                    : "from-gray-600/50 to-transparent opacity-50"
-                }`}
+            {/* Divider */}
+            <div
+              className={\`w-full h-px bg-gradient-to-r transition-all duration-500 ${
+                isHovered
+                  ? `${blog.categoryColor.replace("from-", "from-").replace("to-", "to-")}/50 opacity-100`
+                  : "from-gray-600/50 to-transparent opacity-50"
+              }`}
               />
 
               {/* Read more button */}
@@ -297,7 +233,9 @@ function BlogCard({ blog, index, isVisible }: { blog: any; index: number; isVisi
                       : "text-gray-300 hover:text-white"
                   }`}
                 >
-                  <span className="mr-2">Read More</span>
+                  <Link href="#" className="mr-2 hover:!text-purple-400 duration-300">
+                    Read More
+                  </Link>
                   <ArrowRight
                     className={`w-4 h-4 transition-all duration-300 ${
                       isHovered ? "translate-x-1 text-purple-400" : "group-hover/btn:translate-x-1"
@@ -380,9 +318,9 @@ export default function BlogSection() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
-            `,
+            linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
+          `,
             backgroundSize: "60px 60px",
           }}
         />
@@ -429,22 +367,23 @@ export default function BlogSection() {
         >
           <div className="inline-flex items-center space-x-4 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-purple-400" />
-            <span className="text-purple-300 text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
-              📰 From the Blog
+            <span className="text-purple-300 text-sm md:text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
+              From the Blog
             </span>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
 
-          <h2 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
-              Latest News &
+              Latest Updates from
             </span>
             <br />
-            <span className="text-white drop-shadow-lg">Insights</span>
+            <span className="text-white drop-shadow-lg">ICO Insights</span>
           </h2>
 
           <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed">
-            Stay informed with the latest updates from the crypto world and our platform developments.
+            Stay informed with the latest news, analyses, and developments in the world of cryptocurrencies and
+            blockchain technology.
           </p>
 
           {/* Animated horizontal glow bar */}
@@ -462,15 +401,8 @@ export default function BlogSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Desktop: 3-column grid with featured post spanning 2 columns */}
-          <div className="hidden lg:grid lg:grid-cols-3 gap-8 auto-rows-fr">
-            {displayedBlogs.map((blog, index) => (
-              <BlogCard key={blog.id} blog={blog} index={index} isVisible={isVisible} />
-            ))}
-          </div>
-
-          {/* Mobile: Single column */}
-          <div className="lg:hidden space-y-8">
+          {/* Responsive grid for all devices */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
             {displayedBlogs.map((blog, index) => (
               <BlogCard key={blog.id} blog={blog} index={index} isVisible={isVisible} />
             ))}
@@ -527,10 +459,10 @@ export default function BlogSection() {
 
       {/* Custom CSS */}
       <style jsx>{`
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
+      .bg-gradient-radial {
+        background: radial-gradient(circle, var(--tw-gradient-stops));
+      }
+    `}</style>
     </section>
   )
 }

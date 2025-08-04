@@ -283,11 +283,11 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
 
             {/* Icon */}
             <div
-              className={`flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${milestone.bgGradient} border-2 ${milestone.borderColor} transition-all duration-500 ${
+              className={`flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-2xl bg-gradient-to-br ${milestone.bgGradient} border-2 ${milestone.borderColor} transition-all duration-500 ${
                 isHovered ? "scale-110 rotate-3" : ""
               }`}
             >
-              <Icon className={`w-8 h-8 text-white transition-all duration-300 ${isHovered ? "scale-110" : ""}`} />
+              <Icon className={`w-4 h-4  md:w-8 md:h-8 text-white transition-all duration-300 ${isHovered ? "scale-110" : ""}`} />
             </div>
           </div>
 
@@ -329,7 +329,7 @@ function FilterButtons({
   ]
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 mb-16">
+    <div className="flex flex-wrap justify-center gap-4 mb-8 md:mb-16">
       {filters.map((filter) => {
         const Icon = filter.icon
         return (
@@ -419,22 +419,22 @@ export default function RoadmapSection() {
         ))}
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 lg:px-12">
+      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-12">
         {/* Section header */}
         <div
-          className={`text-center mb-16 transition-all duration-1000 ${
+          className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <div className="inline-flex items-center space-x-4 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-purple-400" />
-            <span className="text-purple-300 text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
-              📍 Roadmap
+            <span className="text-purple-300 text-sm md:text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
+              Roadmap
             </span>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
 
-          <h2 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6 md:mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
               Our Journey
             </span>
@@ -442,7 +442,7 @@ export default function RoadmapSection() {
             <span className="text-white drop-shadow-lg">Ahead</span>
           </h2>
 
-          <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed mb-12">
+          <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed mb-8 md:mb-12">
             A transparent plan of our growth, development, and innovation milestones
           </p>
 
@@ -468,7 +468,7 @@ export default function RoadmapSection() {
           </div>
 
           {/* Milestones grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-4 gap-4 xl:gap-8">
             {filteredMilestones.map((milestone, index) => (
               <RoadmapMilestone key={milestone.id} milestone={milestone} index={index} isVisible={isVisible} />
             ))}
@@ -476,7 +476,7 @@ export default function RoadmapSection() {
         </div>
 
         {/* Mobile Timeline */}
-        <div className="lg:hidden space-y-8">
+        <div className="lg:hidden space-y-4 md:space-y-8">
           {filteredMilestones.map((milestone, index) => (
             <div key={milestone.id} className="relative">
               {/* Vertical connector */}
@@ -484,7 +484,7 @@ export default function RoadmapSection() {
                 <div className="absolute left-8 top-24 w-1 h-16 bg-gradient-to-b from-purple-500 to-blue-500 rounded-full opacity-50" />
               )}
 
-              <div className="flex items-start space-x-6">
+              <div className="flex items-start gap-6">
                 {/* Timeline dot */}
                 <div
                   className={`w-4 h-4 rounded-full border-4 border-gray-900 mt-6 transition-all duration-500 ${
@@ -507,11 +507,11 @@ export default function RoadmapSection() {
 
         {/* Bottom stats */}
         <div
-          className={`text-center mt-20 transition-all duration-1000 delay-1000 ${
+          className={`text-center mt-10 md:mt-20 transition-all duration-1000 delay-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center space-x-8 px-10 py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
+          <div className="flex flex-wrap items-center md:justify-around gap-6 md:gap-8 px-5 md:px-10 py-3 md:py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
             <div className="flex items-center space-x-3">
               <CheckCircle className="w-6 h-6 text-emerald-400" />
               <div className="text-left">
@@ -519,7 +519,7 @@ export default function RoadmapSection() {
                 <div className="text-sm text-gray-400">Completed</div>
               </div>
             </div>
-            <div className="w-px h-12 bg-gray-600" />
+            <div className="w-px h-12 bg-gray-600 hidden md:block" />
             <div className="flex items-center space-x-3">
               <Rocket className="w-6 h-6 text-yellow-400" />
               <div className="text-left">
@@ -527,7 +527,7 @@ export default function RoadmapSection() {
                 <div className="text-sm text-gray-400">In Progress</div>
               </div>
             </div>
-            <div className="w-px h-12 bg-gray-600" />
+            <div className="w-px h-12 bg-gray-600 hidden md:block" />
             <div className="flex items-center space-x-3">
               <Clock className="w-6 h-6 text-blue-400" />
               <div className="text-left">

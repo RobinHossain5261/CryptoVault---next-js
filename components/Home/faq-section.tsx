@@ -153,7 +153,7 @@ function FAQItem({
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight)
     }
-  }, [faq.answer])
+  }, [faq.answer, isOpen]) // Recalculate height when isOpen changes
 
   const Icon = faq.icon
 
@@ -163,7 +163,7 @@ function FAQItem({
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <Card
-        className={`relative bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-xl border-2 transition-all duration-500 overflow-hidden cursor-pointer ${
+        className={`relative bg-[#160e23] from-gray-900/60 to-black/60 backdrop-blur-xl border-2 transition-all duration-500 overflow-hidden cursor-pointer ${
           isOpen
             ? "border-purple-400/60 shadow-2xl shadow-purple-500/25"
             : isHovered
@@ -190,19 +190,19 @@ function FAQItem({
         />
 
         {/* Question header */}
-        <div className="relative z-10 p-6 lg:p-8 cursor-pointer" onClick={onToggle}>
+        <div className="relative z-10 p-3 md:p-6 lg:p-8 cursor-pointer" onClick={onToggle}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 flex-1">
+            <div className="flex items-center gap-2 md:gap-4 flex-1">
               {/* Icon */}
               <div
-                className={`flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 ${
+                className={`flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl transition-all duration-300 ${
                   isOpen
                     ? "bg-gradient-to-r from-purple-500/30 to-blue-500/30 border-2 border-purple-400/50"
                     : "bg-gray-700/30 border-2 border-gray-600/30"
                 }`}
               >
                 <Icon
-                  className={`w-6 h-6 transition-all duration-300 ${isOpen ? "text-purple-300" : "text-gray-400"}`}
+                  className={`w-4 h-4 md:w-6 md:h-6 transition-all duration-300 ${isOpen ? "text-purple-300" : "text-gray-400"}`}
                 />
               </div>
 
@@ -220,7 +220,7 @@ function FAQItem({
 
             {/* Chevron icon */}
             <div
-              className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+              className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full transition-all duration-300 ${
                 isOpen
                   ? "bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50"
                   : "bg-gray-700/20 border border-gray-600/30 group-hover:bg-gray-600/30"
@@ -279,7 +279,7 @@ function CategoryTab({
 
   return (
     <button
-      className={`relative group px-6 py-4 rounded-2xl font-semibold transition-all duration-300 overflow-hidden ${
+      className={`relative group px-3 md:px-6 py-2 md:py-4 rounded-2xl font-semibold transition-all duration-300 overflow-hidden ${
         isActive
           ? "bg-gradient-to-r from-purple-600/80 to-blue-600/80 text-white shadow-lg shadow-purple-500/25 scale-105"
           : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-white border border-gray-600/30 hover:border-gray-500/50"
@@ -332,8 +332,8 @@ function ContactSupportCTA() {
       {/* Background glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/15 to-green-600/10 blur-3xl rounded-3xl" />
 
-      <Card className="relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-xl border-2 border-gray-600/30 hover:border-purple-400/50 transition-all duration-500">
-        <CardContent className="p-8 lg:p-12 text-center">
+      <Card className="relative bg-[#160e23] from-gray-900/80 to-black/80 backdrop-blur-xl border-2 border-gray-600/30 hover:border-purple-400/50 transition-all duration-500">
+        <CardContent className="p-4 md:p-8 lg:p-12 text-center">
           <div className="space-y-8">
             {/* Header */}
             <div className="space-y-4">
@@ -377,7 +377,7 @@ function ContactSupportCTA() {
 
             {/* CTA Button */}
             <div className="pt-4">
-              <Button className="relative group bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 px-8 py-6 text-lg overflow-hidden">
+              <Button className="relative group bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 px-4 md:px-8 py-3 md:py-6 text-lg overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
                 <MessageCircle className="w-5 h-5 mr-2 relative z-10" />
                 <span className="relative z-10">Contact Support Team</span>
@@ -423,6 +423,10 @@ export default function FAQSection() {
   }
 
   const currentFAQs = faqData[activeCategory as keyof typeof faqData] || []
+
+  // Split FAQs into two columns for desktop view
+  const leftColumnFAQs = currentFAQs.filter((_, index) => index % 2 === 0)
+  const rightColumnFAQs = currentFAQs.filter((_, index) => index % 2 !== 0)
 
   return (
     <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
@@ -477,22 +481,22 @@ export default function FAQSection() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 lg:px-12">
+      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-12">
         {/* Section header */}
         <div
-          className={`text-center mb-16 transition-all duration-1000 ${
+          className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <div className="inline-flex items-center space-x-4 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-purple-400" />
             <span className="text-purple-300 text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
-              🙋 FAQ
+            FAQ
             </span>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
 
-          <h2 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-lg">
               Frequently Asked
             </span>
@@ -534,15 +538,28 @@ export default function FAQSection() {
         >
           {/* Desktop: 2-column layout */}
           <div className="hidden lg:grid lg:grid-cols-2 gap-8">
-            {currentFAQs.map((faq, index) => (
-              <FAQItem
-                key={faq.id}
-                faq={faq}
-                isOpen={openFAQ === faq.id}
-                onToggle={() => handleFAQToggle(faq.id)}
-                index={index}
-              />
-            ))}
+            <div className="space-y-6">
+              {leftColumnFAQs.map((faq, index) => (
+                <FAQItem
+                  key={faq.id}
+                  faq={faq}
+                  isOpen={openFAQ === faq.id}
+                  onToggle={() => handleFAQToggle(faq.id)}
+                  index={index}
+                />
+              ))}
+            </div>
+            <div className="space-y-6">
+              {rightColumnFAQs.map((faq, index) => (
+                <FAQItem
+                  key={faq.id}
+                  faq={faq}
+                  isOpen={openFAQ === faq.id}
+                  onToggle={() => handleFAQToggle(faq.id)}
+                  index={index}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Mobile: Single column */}

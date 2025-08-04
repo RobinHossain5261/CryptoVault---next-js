@@ -321,7 +321,7 @@ export default function MarqueeSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
 
-      <div className="relative z-10 space-y-16">
+      <div className="relative z-10 space-y-8 md:space-y-12 lg:space-y-16">
         {/* Row 1: Partners with wave effect */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-blue-600/10 to-purple-600/5 blur-3xl" />
