@@ -5,9 +5,9 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, TrendingUp, Zap, Clock } from "lucide-react"
+import { ArrowRight, TrendingUp, Zap, Clock, User, Calendar } from "lucide-react" // Added User and Calendar
 import Image from "next/image"
-import { blogData } from "@/public/fakeData/fateData"
+import { blogData } from "@/public/fakeData/fakeData"
 import Link from "next/link"
 
 // Floating particles component
@@ -64,7 +64,7 @@ function BlogCard({
     <div
       className={`group transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      } ${blog.featured ? "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2" : ""}`}
+      }`}
       style={{ animationDelay: `${index * 200}ms` }}
     >
       <Card
@@ -169,9 +169,7 @@ function BlogCard({
             <div className="space-y-4">
               {/* Title */}
               <h3
-                className={`font-bold leading-tight transition-all duration-300 ${
-                  blog.featured ? "text-2xl lg:text-3xl" : "text-xl lg:text-2xl"
-                } ${
+                className={`font-bold leading-tight transition-all duration-300 text-xl lg:text-2xl ${
                   isHovered
                     ? `bg-gradient-to-r ${blog.categoryColor} bg-clip-text text-transparent`
                     : "text-white group-hover:text-gray-100"
@@ -183,44 +181,44 @@ function BlogCard({
               {/* Excerpt */}
               <p
                 className={`leading-relaxed transition-all duration-300 ${
-                  blog.featured ? "text-lg" : "text-base"
-                } ${isHovered ? "text-gray-200" : "text-gray-300"} line-clamp-2\`} {/* Added line-clamp-2 */}\
-            >
-              {blog.excerpt}
-            </p>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-6 space-y-4">
-            {/* Author and date */}
-            <div className="flex items-center justify-between text-sm text-gray-400">
-              <div className="flex items-center space-x-3">
-                <Image
-                  src={blog.authorAvatar || "/placeholder.svg?height=32&width=32&query=user avatar"}
-                  alt={blog.author}
-                  width={32}
-                  height={32}
-                  className="rounded-full object-cover"
-                />
-                <div className="flex items-center space-x-2">
-                  <User className="w-4 h-4" />
-                  <span className="font-medium">{blog.author}</span>
-                </div>
-                <div className="w-1 h-1 bg-gray-500 rounded-full" />
-                <div className="flex items-center space-x-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>{blog.date}</span>
-                </div>
-              </div>
+                  isHovered ? "text-gray-200" : "text-gray-300"
+                } line-clamp-2`}
+              >
+                {blog.excerpt}
+              </p>
             </div>
 
-            {/* Divider */}
-            <div
-              className={\`w-full h-px bg-gradient-to-r transition-all duration-500 ${
-                isHovered
-                  ? `${blog.categoryColor.replace("from-", "from-").replace("to-", "to-")}/50 opacity-100`
-                  : "from-gray-600/50 to-transparent opacity-50"
-              }`}
+            {/* Footer */}
+            <div className="mt-6 space-y-4">
+              {/* Author and date */}
+              <div className="flex items-center justify-between text-sm text-gray-400">
+                <div className="flex flex-wrap gap-3 items-center">
+                  <Image
+                    src={blog.authorAvatar || "/placeholder.svg?height=32&width=32&query=user avatar"}
+                    alt={blog.author}
+                    width={32}
+                    height={32}
+                    className="rounded-full object-cover"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <User className="w-4 h-4" />
+                    <span className="font-medium">{blog.author}</span>
+                  </div>
+                  <div className="w-1 h-1 bg-gray-500 rounded-full" />
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>{blog.date}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div
+                className={`w-full h-px bg-gradient-to-r transition-all duration-500 ${
+                  isHovered
+                    ? `${blog.categoryColor.replace("from-", "from-").replace("to-", "to-")}/50 opacity-100`
+                    : "from-gray-600/50 to-transparent opacity-50"
+                }`}
               />
 
               {/* Read more button */}
@@ -264,7 +262,7 @@ function ViewAllButton() {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="text-center mt-16">
+    <div className="text-center mt-8 md:mt-16">
       <Button
         className="relative group bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 px-8 py-6 text-lg overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
@@ -402,7 +400,7 @@ export default function BlogSection() {
           }`}
         >
           {/* Responsive grid for all devices */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 auto-rows-fr">
             {displayedBlogs.map((blog, index) => (
               <BlogCard key={blog.id} blog={blog} index={index} isVisible={isVisible} />
             ))}
@@ -424,7 +422,7 @@ export default function BlogSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center space-x-8 px-10 py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
+          <div className="inline-flex flex-wrap items-center gap-6 md:gap-8 px-10 py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
             <div className="flex items-center space-x-3">
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
               <div className="text-left">
@@ -432,16 +430,16 @@ export default function BlogSection() {
                 <div className="text-sm text-gray-400">Articles</div>
               </div>
             </div>
-            <div className="w-px h-12 bg-gray-600" />
-            <div className="flex items-center space-x-3">
+            <div className="w-px h-12 bg-gray-600 hidden md:block" />
+            <div className="flex gap-3 items-center">
               <TrendingUp className="w-6 h-6 text-blue-400" />
               <div className="text-left">
                 <div className="text-2xl font-bold text-white">25K+</div>
                 <div className="text-sm text-gray-400">Monthly Readers</div>
               </div>
             </div>
-            <div className="w-px h-12 bg-gray-600" />
-            <div className="flex items-center space-x-3">
+            <div className="w-px h-12 bg-gray-600 hidden md:block" />
+            <div className="flex gap-3 items-center">
               <Zap className="w-6 h-6 text-yellow-400" />
               <div className="text-left">
                 <div className="text-2xl font-bold text-white">Weekly</div>
@@ -457,12 +455,6 @@ export default function BlogSection() {
       <div className="absolute bottom-0 right-1/4 w-96 h-40 bg-gradient-to-t from-blue-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-40 bg-gradient-to-t from-green-600/15 to-transparent blur-3xl" />
 
-      {/* Custom CSS */}
-      <style jsx>{`
-      .bg-gradient-radial {
-        background: radial-gradient(circle, var(--tw-gradient-stops));
-      }
-    `}</style>
     </section>
   )
 }

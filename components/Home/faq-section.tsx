@@ -243,7 +243,7 @@ function FAQItem({
           }}
         >
           <div ref={contentRef} className="px-6 lg:px-8 pb-6 lg:pb-8">
-            <div className="pl-16 pr-4">
+            <div className="pl-8 md:pl-16 pr-4">
               <div
                 className={`w-full h-px bg-gradient-to-r from-purple-400/50 via-blue-400/50 to-transparent mb-6 transition-all duration-500 ${
                   isOpen ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"

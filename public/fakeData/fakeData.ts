@@ -5,6 +5,12 @@ import blog3 from "@/public/blog3.png";
 import blog4 from "@/public/blog4.png";
 import blog5 from "@/public/blog5.png";
 import blog6 from "@/public/blog6.png";
+import user1 from "@/public/user1.png";
+import user2 from "@/public/user2.png";
+import user3 from "@/public/user3.png";
+import user4 from "@/public/user4.png";
+import user5 from "@/public/user5.png";
+import user6 from "@/public/user6.png";
 
 // Blog data with realistic crypto/ICO content
 export const blogData = [
@@ -20,6 +26,7 @@ export const blogData = [
     author: "Sarah Chen",
     date: "Dec 28, 2024",
     readTime: "5 min read",
+    authorAvatar:user1,
     featured: true,
     icon: Shield,
   },
@@ -35,6 +42,7 @@ export const blogData = [
     author: "Michael Rodriguez",
     date: "Dec 26, 2024",
     readTime: "3 min read",
+    authorAvatar:user2,
     featured: false,
     icon: TrendingUp,
   },
@@ -50,6 +58,7 @@ export const blogData = [
     author: "Alex Thompson",
     date: "Dec 24, 2024",
     readTime: "7 min read",
+    authorAvatar:user3,
     featured: false,
     icon: Zap,
   },
@@ -65,6 +74,7 @@ export const blogData = [
     author: "Emma Wilson",
     date: "Dec 22, 2024",
     readTime: "6 min read",
+    authorAvatar:user4,
     featured: false,
     icon: Globe,
   },
@@ -80,6 +90,7 @@ export const blogData = [
     author: "David Kim",
     date: "Dec 20, 2024",
     readTime: "4 min read",
+    authorAvatar:user5,
     featured: false,
     icon: Shield,
   },
@@ -95,6 +106,7 @@ export const blogData = [
     author: "Lisa Park",
     date: "Dec 18, 2024",
     readTime: "2 min read",
+    authorAvatar:user6,
     featured: false,
     icon: TrendingUp,
   },

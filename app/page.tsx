@@ -10,13 +10,13 @@ import CryptoHero from "@/components/Home/crypto-hero";
 export default function Page() {
   return (
     <>
-      {/* <CryptoHero /> */}
+      <CryptoHero />
       <TokenSaleSection />
       <MarqueeSection />
       <FeaturesSection />
       <RoadmapSection />
       <FAQSection />
-      {/* <BlogSection /> */}
+      <BlogSection />
       <ContactSection />   
     </>
   );

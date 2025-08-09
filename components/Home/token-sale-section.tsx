@@ -391,9 +391,9 @@ export default function TokenSaleSection() {
 
               <Button
                 variant="outline"
-                className="border-gray-600 bg-gray-900/50 hover:bg-purple-900/50 text-white backdrop-blur-sm px-8 py-6 text-lg relative group overflow-hidden"
+                className="border-gray-600 bg-gray-900/50 hover:bg-border-900/50 text-white backdrop-blur-sm px-8 py-6 text-lg relative group overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 transition-all duration-300" /> */}
                 <Target className="w-5 h-5 mr-2 relative z-10" />
                 <span className="relative z-10">View Details</span>
               </Button>
