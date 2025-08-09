@@ -35,7 +35,7 @@ const Header = () => {
       </div>
 
       {/* CTA Button */}
-      <Button className="hidden lg:flex bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">
+      <Button className="hidden lg:flex bg-blue-600 hover:bg-purple-700 text-white border-0 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">
         Try it Now
       </Button>
     </header>

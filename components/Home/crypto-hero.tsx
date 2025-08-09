@@ -141,7 +141,7 @@ export default function CryptoHero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 md:pt-8">
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 px-4 md:px-8 py-3 md:py-6 text-lg relative group overflow-hidden">
+              <Button className="bg-blue-600 hover:bg-purple-700  text-white border-0 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 px-4 md:px-8 py-3 md:py-6 text-lg relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 blur-xl group-hover:blur-2xl transition-all duration-300" />
                 <FileText className="w-5 h-5 mr-1 sm:mr-2 relative z-10" />
                 <span className="relative z-10">Whitepaper</span>
@@ -149,7 +149,7 @@ export default function CryptoHero() {
 
               <Button
                 variant="outline"
-                className="border-gray-600 bg-gray-900/50 hover:bg-gray-800/50 text-white backdrop-blur-sm px-4 md:px-8 py-3 md:py-6 text-lg relative group overflow-hidden"
+                className="border-gray-600 bg-gray-900/50 hover:bg-purple-700 text-white  duration-300 backdrop-blur-sm px-4 md:px-8 py-3 md:py-6 text-lg relative group overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <Zap className="w-5 h-5 mr-1 sm:mr-2 relative z-10" />

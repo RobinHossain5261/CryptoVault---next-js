@@ -383,17 +383,16 @@ export default function TokenSaleSection() {
 
             {/* Enhanced CTA */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6 mt-auto">
-              <Button className="relative group bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 px-8 py-6 text-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
+              <Button className="relative group bg-blue-600 hover:bg-purple-700 border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 px-8 py-6 text-lg overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
                 <Zap className="w-5 h-5 mr-2 relative z-10" />
                 <span className="relative z-10">Buy Tokens Now</span>
               </Button>
 
               <Button
                 variant="outline"
-                className="border-gray-600 bg-gray-900/50 hover:bg-border-900/50 text-white backdrop-blur-sm px-8 py-6 text-lg relative group overflow-hidden"
+                className="border-gray-600 bg-gray-900/50 hover:bg-border-900/50 hover:bg-purple-700 duration-300 text-white backdrop-blur-sm px-8 py-6 text-lg relative group overflow-hidden"
               >
-                {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 opacity-0 group-hover:opacity-100 transition-all duration-300" /> */}
                 <Target className="w-5 h-5 mr-2 relative z-10" />
                 <span className="relative z-10">View Details</span>
               </Button>

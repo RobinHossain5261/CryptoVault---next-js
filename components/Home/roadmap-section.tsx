@@ -338,7 +338,7 @@ function FilterButtons({
             onClick={() => setActiveFilter(filter.key)}
             className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
               activeFilter === filter.key
-                ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25"
+                ? "bg-blue-600 text-white shadow-lg shadow-purple-500/25"
                 : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-600/50"
             }`}
           >
@@ -511,7 +511,7 @@ export default function RoadmapSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="flex flex-wrap items-center md:justify-around gap-6 md:gap-8 px-5 md:px-10 py-3 md:py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
+          <div className="inline-flex flex-wrap items-center md:justify-around gap-6 md:gap-8 px-5 md:px-10 py-3 md:py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
             <div className="flex items-center space-x-3">
               <CheckCircle className="w-6 h-6 text-emerald-400" />
               <div className="text-left">

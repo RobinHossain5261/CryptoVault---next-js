@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -416,7 +415,7 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative group w-full bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 py-6 text-lg overflow-hidden"
+                  className="relative group w-full bg-blue-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 py-6 text-lg overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
 
@@ -644,8 +643,8 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
       </Card>
 
       {/* Live chat button */}
-      <Button className="w-full relative group bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 text-white border-0 shadow-2xl shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-500 py-6 text-lg overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
+      <Button className="w-full relative group bg-blue-600  hover:bg-purple-700  text-white border-0 shadow-2xl shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-500 py-6 text-lg overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
         <div className="flex items-center justify-center space-x-2 relative z-10">
           <MessageCircle className="w-5 h-5" />
           <span>Start Live Chat</span>

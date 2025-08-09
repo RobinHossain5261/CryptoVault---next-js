@@ -264,7 +264,7 @@ function ViewAllButton() {
   return (
     <div className="text-center mt-8 md:mt-16">
       <Button
-        className="relative group bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 px-8 py-6 text-lg overflow-hidden"
+        className="relative group bg-blue-600  hover:bg-purple-700  text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 px-4  md:px-8 py-3 md:py-6 text-lg overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
