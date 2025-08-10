@@ -1,5 +1,4 @@
 "use client";
-
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
@@ -81,7 +80,7 @@ export default function CryptoHero() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className=" bg-black relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
 
@@ -159,7 +158,7 @@ export default function CryptoHero() {
           </div>
 
           {/* Right 3D Element */}
-          <div className="relative h-[300px] max-md:w-[300px] md:h-[700px] lg:h-[800px]">
+          <div className="relative h-[300px] max-md:w-[300px] md:h-[700px]">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-3xl" />
             <Canvas
               camera={{ position: [0, 0, 8], fov: 50 }}

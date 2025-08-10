@@ -3,133 +3,8 @@
 import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Shield,
-  Zap,
-  Layers,
-  Globe,
-  Gem,
-  Users,
-  Lock,
-  TrendingUp,
-  Cpu,
-  Network,
-  Sparkles,
-} from "lucide-react";
-
-// Enhanced feature data with better contrast colors
-const features = [
-  {
-    id: 1,
-    title: "Secure & Audited Smart Contracts",
-    description:
-      "Military-grade security with multi-layer audits by leading blockchain security firms.",
-    icon: Shield,
-    gradient: "from-emerald-300 to-green-300",
-    bgGradient: "from-emerald-500/30 to-green-500/30",
-    glowColor: "shadow-emerald-500/50",
-    borderColor: "border-emerald-400/60",
-    size: "large",
-    badge: "Verified",
-    badgeColor: "bg-emerald-400/20 text-emerald-200 border-emerald-300/50",
-    pattern: "dots",
-  },
-  {
-    id: 2,
-    title: "Lightning Fast",
-    description:
-      "Sub-second transaction speeds with minimal gas fees across all networks.",
-    icon: Zap,
-    gradient: "from-yellow-300 to-amber-300",
-    bgGradient: "from-yellow-500/30 to-amber-500/30",
-    glowColor: "shadow-yellow-500/50",
-    borderColor: "border-yellow-400/60",
-    size: "medium",
-    badge: "New",
-    badgeColor: "bg-yellow-400/20 text-yellow-200 border-yellow-300/50",
-    pattern: "lightning",
-  },
-  {
-    id: 3,
-    title: "DeFi Integration Ready",
-    description:
-      "Seamlessly connect with major DeFi protocols and yield farming platforms.",
-    icon: Layers,
-    gradient: "from-purple-300 to-pink-300",
-    bgGradient: "from-purple-500/30 to-pink-500/30",
-    glowColor: "shadow-purple-500/50",
-    borderColor: "border-purple-400/60",
-    size: "medium",
-    pattern: "waves",
-  },
-  {
-    id: 4,
-    title: "Multi-Chain Compatibility",
-    description:
-      "Deploy across Ethereum, BSC, Polygon, and 15+ other blockchain networks.",
-    icon: Globe,
-    gradient: "from-cyan-300 to-blue-300",
-    bgGradient: "from-cyan-500/30 to-blue-500/30",
-    glowColor: "shadow-cyan-500/50",
-    borderColor: "border-cyan-400/60",
-    size: "large",
-    pattern: "network",
-  },
-  {
-    id: 5,
-    title: "Real Product Backing",
-    description:
-      "Every token backed by tangible assets and real-world utility.",
-    icon: Gem,
-    gradient: "from-indigo-300 to-violet-300",
-    bgGradient: "from-indigo-500/30 to-violet-500/30",
-    glowColor: "shadow-indigo-500/50",
-    borderColor: "border-indigo-400/60",
-    size: "medium",
-    badge: "Most Loved",
-    badgeColor: "bg-indigo-400/20 text-indigo-200 border-indigo-300/50",
-    pattern: "gems",
-  },
-  {
-    id: 6,
-    title: "Community Governance",
-    description:
-      "Decentralized decision-making with transparent voting mechanisms.",
-    icon: Users,
-    gradient: "from-teal-300 to-emerald-300",
-    bgGradient: "from-teal-500/30 to-emerald-500/30",
-    glowColor: "shadow-teal-500/50",
-    borderColor: "border-teal-400/60",
-    size: "small",
-    pattern: "circles",
-  },
-  {
-    id: 7,
-    title: "Advanced Analytics",
-    description:
-      "Real-time insights and performance tracking for all your investments.",
-    icon: TrendingUp,
-    gradient: "from-rose-300 to-pink-300",
-    bgGradient: "from-rose-500/30 to-pink-500/30",
-    glowColor: "shadow-rose-500/50",
-    borderColor: "border-rose-400/60",
-    size: "small",
-    pattern: "charts",
-  },
-  {
-    id: 8,
-    title: "AI-Powered Security",
-    description:
-      "Machine learning algorithms detect and prevent suspicious activities.",
-    icon: Cpu,
-    gradient: "from-violet-300 to-purple-300",
-    bgGradient: "from-violet-500/30 to-purple-500/30",
-    glowColor: "shadow-violet-500/50",
-    borderColor: "border-violet-400/60",
-    size: "medium",
-    pattern: "circuit",
-  },
-];
+import { Lock, Network, Sparkles } from "lucide-react";
+import { features } from "@/public/fakeData/fakeData";
 
 // Creative background patterns
 function BackgroundPattern({
@@ -288,20 +163,6 @@ function CreativeFeatureCard({
     });
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const newRipple = {
-      id: Date.now(),
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    };
-    setRipples((prev) => [...prev, newRipple]);
-    setTimeout(() => {
-      setRipples((prev) => prev.filter((ripple) => ripple.id !== newRipple.id));
-    }, 1000);
-  };
-
   const getGridClasses = () => {
     switch (feature.size) {
       case "large":
@@ -336,7 +197,6 @@ function CreativeFeatureCard({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
-        onClick={handleClick}
       >
         {/* Ripple effects */}
         {ripples.map((ripple) => (
@@ -537,6 +397,7 @@ export default function FeaturesSection() {
 
   return (
     <section
+      id="features"
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-black overflow-hidden"
     >
@@ -641,49 +502,12 @@ export default function FeaturesSection() {
             />
           ))}
         </div>
-
-        {/* Enhanced bottom CTA */}
-        <div
-          className={`text-center mt-8 md:mt-14 lg:mt-20 transition-all duration-1000 delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="inline-flex flex-wrap items-center gap-3 md:gap-6 px-5 md:px-10 py-3 md:py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" />
-              <span className="text-gray-200 text-base font-semibold">
-                All Features Active
-              </span>
-            </div>
-            <div className="w-px h-6 bg-gray-500 hidden lg:block" />
-            <div className="flex items-center space-x-3">
-              <Lock className="w-5 h-5 text-cyan-400 drop-shadow-lg" />
-              <span className="text-gray-200 text-base font-semibold">
-                Enterprise Grade Security
-              </span>
-            </div>
-            <div className="w-px h-6 bg-gray-500 hidden lg:block"  />
-            <div className="flex items-center space-x-3">
-              <Sparkles className="w-5 h-5 text-yellow-400 drop-shadow-lg" />
-              <span className="text-gray-200 text-base font-semibold">
-                Premium Experience
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Enhanced bottom glow effects */}
       <div className="absolute bottom-0 left-1/6 w-96 h-40 bg-gradient-to-t from-purple-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 right-1/6 w-96 h-40 bg-gradient-to-t from-cyan-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-40 bg-gradient-to-t from-emerald-600/15 to-transparent blur-3xl" />
-
-      {/* Custom CSS for enhanced effects */}
-      <style jsx>{`
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
     </section>
   );
 }

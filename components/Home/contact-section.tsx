@@ -24,56 +24,37 @@ import {
   AlertCircle,
   ExternalLink,
 } from "lucide-react";
+import Link from "next/link";
 
-// Social/Community links data
+// Social media links
 const socialLinks = [
   {
     name: "Telegram",
     icon: "💬",
-    url: "https://t.me/ironik",
+    url: "#",
     color: "from-blue-400 to-cyan-400",
-    bgColor: "from-blue-500/20 to-cyan-500/20",
-    members: "50K+",
+    hoverColor: "hover:shadow-blue-400/50",
   },
   {
     name: "Discord",
     icon: "🎮",
-    url: "https://discord.gg/ironik",
+    url: "#",
     color: "from-indigo-400 to-purple-400",
-    bgColor: "from-indigo-500/20 to-purple-500/20",
-    members: "25K+",
+    hoverColor: "hover:shadow-purple-400/50",
   },
   {
     name: "X (Twitter)",
     icon: "🐦",
-    url: "https://x.com/ironik",
+    url: "#",
     color: "from-gray-400 to-blue-400",
-    bgColor: "from-gray-500/20 to-blue-500/20",
-    members: "75K+",
+    hoverColor: "hover:shadow-blue-400/50",
   },
   {
     name: "Medium",
     icon: "📝",
-    url: "https://medium.com/@ironik",
+    url: "#",
     color: "from-green-400 to-emerald-400",
-    bgColor: "from-green-500/20 to-emerald-500/20",
-    members: "15K+",
-  },
-  {
-    name: "YouTube",
-    icon: "📺",
-    url: "https://youtube.com/@ironik",
-    color: "from-red-400 to-pink-400",
-    bgColor: "from-red-500/20 to-pink-500/20",
-    members: "30K+",
-  },
-  {
-    name: "LinkedIn",
-    icon: "💼",
-    url: "https://linkedin.com/company/ironik",
-    color: "from-blue-400 to-blue-600",
-    bgColor: "from-blue-500/20 to-blue-600/20",
-    members: "10K+",
+    hoverColor: "hover:shadow-green-400/50",
   },
 ];
 
@@ -81,8 +62,7 @@ const socialLinks = [
 const contactInfo = {
   address: "123 Blockchain Ave, Cryptonia, CY 2048",
   phone: "+1 (555) 123-IRON",
-  email: "contact@ironik.io",
-  supportEmail: "support@ironik.io",
+  email: "contact@CryptoVault.io",
   businessHours: "24/7 Support Available",
 };
 
@@ -415,7 +395,7 @@ function ContactForm({ isVisible }: { isVisible: boolean }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative group w-full bg-blue-600 hover:from-purple-700 hover:via-blue-700 hover:to-green-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 py-6 text-lg overflow-hidden"
+                  className="relative group w-full bg-blue-600 hover:bg-purple-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-500 py-6 text-lg overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
 
@@ -525,9 +505,6 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
                   <p className="text-gray-300 group-hover:text-gray-200 transition-colors">
                     {contactInfo.email}
                   </p>
-                  <p className="text-sm text-gray-400">
-                    Support: {contactInfo.supportEmail}
-                  </p>
                 </div>
               </div>
 
@@ -555,87 +532,28 @@ function ContactInfo({ isVisible }: { isVisible: boolean }) {
         <CardContent className="relative z-10 p-4 md:p-8">
           <div className="space-y-6">
             {/* Header */}
-            <div className="space-y-2">
-              <h3 className="text-xl md:text-2xl font-bold text-white">
-                Join Our Community
-              </h3>
-              <p className="text-gray-400">
-                Connect with us on social platforms
-              </p>
-            </div>
+            <h3 className="text-xl md:text-2xl font-bold text-white">
+              Join Our Community
+            </h3>
 
             {/* Social links grid */}
-            <div className="grid  sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-              {socialLinks.map((social, index) => (
-                <a
+            <div className="flex gap-3">
+              {socialLinks.map((social) => (
+                <Link
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative"
-                  onMouseEnter={() => setHoveredSocial(social.name)}
-                  onMouseLeave={() => setHoveredSocial(null)}
+                  className={`group relative flex items-center justify-center w-10 h-10 bg-gray-800/50 border border-gray-600/50 rounded-lg transition-all duration-300 hover:scale-110 hover:border-opacity-80 ${social.hoverColor} hover:shadow-lg`}
+                  title={social.name}
                 >
+                  <span className="text-lg group-hover:scale-110 transition-transform duration-300">
+                    {social.icon}
+                  </span>
                   <div
-                    className={`relative p-4 bg-gradient-to-br ${
-                      social.bgColor
-                    } border-2 border-gray-600/30 rounded-xl transition-all duration-300 hover:scale-105 hover:border-opacity-60 ${
-                      hoveredSocial === social.name
-                        ? `hover:border-${
-                            social.color.split("-")[1]
-                          }-400/60 hover:shadow-lg`
-                        : ""
-                    }`}
-                    style={{
-                      borderColor:
-                        hoveredSocial === social.name
-                          ? `rgba(${
-                              social.color.includes("blue")
-                                ? "59, 130, 246"
-                                : social.color.includes("purple")
-                                ? "139, 92, 246"
-                                : social.color.includes("green")
-                                ? "16, 185, 129"
-                                : social.color.includes("red")
-                                ? "239, 68, 68"
-                                : "156, 163, 175"
-                            }, 0.6)`
-                          : undefined,
-                    }}
-                  >
-                    {/* Background glow */}
-                    {hoveredSocial === social.name && (
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-r ${social.bgColor} opacity-20 rounded-xl blur-sm`}
-                      />
-                    )}
-
-                    <div className="relative z-10 flex items-center space-x-3">
-                      <div className="text-2xl">{social.icon}</div>
-                      <div className="flex-1 min-w-0">
-                        <h4
-                          className={`font-semibold transition-colors ${
-                            hoveredSocial === social.name
-                              ? "text-white"
-                              : "text-gray-300"
-                          }`}
-                        >
-                          {social.name}
-                        </h4>
-                        <p className="text-sm text-gray-400">
-                          {social.members} members
-                        </p>
-                      </div>
-                      <ExternalLink
-                        className={`w-4 h-4 transition-all duration-300 ${
-                          hoveredSocial === social.name
-                            ? "text-white translate-x-1"
-                            : "text-gray-500"
-                        }`}
-                      />
-                    </div>
-                  </div>
-                </a>
+                    className={`absolute inset-0 bg-gradient-to-r ${social.color} opacity-0 group-hover:opacity-20 rounded-lg transition-opacity duration-300`}
+                  />
+                </Link>
               ))}
             </div>
           </div>
@@ -678,6 +596,7 @@ export default function ContactSection() {
 
   return (
     <section
+      id="contact"
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-black overflow-hidden"
     >
@@ -791,36 +710,6 @@ export default function ContactSection() {
 
           {/* Right column - Contact info */}
           <ContactInfo isVisible={isVisible} />
-        </div>
-
-        {/* Bottom CTA */}
-        <div
-          className={`text-center mt-8 md:mt-16 transition-all duration-1000 delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="inline-flex flex-wrap items-center gap-3 md:gap-6 px-5 md:px-10 py-3 md:py-6 bg-[#160e23] backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
-              <span className="text-gray-200 text-base font-semibold">
-                Response within 24 hours
-              </span>
-            </div>
-            <div className="w-px h-6 bg-gray-500 hidden lg:block" />
-            <div className="flex items-center gap-2 sm:gap-3">
-              <MessageCircle className="w-5 h-5 text-blue-400" />
-              <span className="text-gray-200 text-base font-semibold">
-                24/7 Community Support
-              </span>
-            </div>
-            <div className="w-px h-6 bg-gray-500 hidden lg:block" />
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Mail className="w-5 h-5 text-purple-400" />
-              <span className="text-gray-200 text-base font-semibold">
-                Secure Communication
-              </span>
-            </div>
-          </div>
         </div>
       </div>
 

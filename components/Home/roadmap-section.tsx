@@ -378,7 +378,7 @@ export default function RoadmapSection() {
   )
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section id="roadmap" ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-black to-blue-900/15" />
@@ -503,39 +503,6 @@ export default function RoadmapSection() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Bottom stats */}
-        <div
-          className={`text-center mt-10 md:mt-20 transition-all duration-1000 delay-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="inline-flex flex-wrap items-center md:justify-around gap-6 md:gap-8 px-5 md:px-10 py-3 md:py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <CheckCircle className="w-6 h-6 text-emerald-400" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">2</div>
-                <div className="text-sm text-gray-400">Completed</div>
-              </div>
-            </div>
-            <div className="w-px h-12 bg-gray-600 hidden md:block" />
-            <div className="flex items-center space-x-3">
-              <Rocket className="w-6 h-6 text-yellow-400" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">1</div>
-                <div className="text-sm text-gray-400">In Progress</div>
-              </div>
-            </div>
-            <div className="w-px h-12 bg-gray-600 hidden md:block" />
-            <div className="flex items-center space-x-3">
-              <Clock className="w-6 h-6 text-blue-400" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">5</div>
-                <div className="text-sm text-gray-400">Upcoming</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 

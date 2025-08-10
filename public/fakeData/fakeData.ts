@@ -6,6 +6,9 @@ import {
   Coins,
   Users,
   HelpCircle,
+  Layers,
+  Gem,
+  Cpu,
 } from "lucide-react";
 import blog from "@/public/blog.png";
 import blog2 from "@/public/blog2.png";
@@ -19,6 +22,45 @@ import user3 from "@/public/user3.png";
 import user4 from "@/public/user4.png";
 import user5 from "@/public/user5.png";
 import user6 from "@/public/user6.png";
+
+// "Home", "Features", "Roadmap", "FAQ", "Blog", "Contact"
+export const headerData = [
+  {
+    id: 1,
+    title: "Home",
+    url: "#",
+  },
+  {
+    id: 2,
+    title: "Sale",
+    url: "#sale",
+  },
+  {
+    id: 3,
+    title: "Features",
+    url: "#features",
+  },
+  {
+    id: 4,
+    title: "Roadmap",
+    url: "#roadmap",
+  },
+  {
+    id: 5,
+    title: "Faq",
+    url: "#faq",
+  },
+  {
+    id: 6,
+    title: "Blog",
+    url: "#blog",
+  },
+  {
+    id: 7,
+    title: "Contact",
+    url: "#contact",
+  },
+];
 
 // Blog data with realistic crypto/ICO content
 export const blogData = [
@@ -125,23 +167,23 @@ export const faqData = {
   general: [
     {
       id: 1,
-      question: "What is IRONIK and how does it work?",
+      question: "What is CryptoVault and how does it work?",
       answer:
-        "IRONIK is a revolutionary cryptocurrency backed by real-world products and assets. Our token operates on a multi-chain infrastructure, providing holders with tangible value through our innovative backing mechanism. Each token represents a stake in our growing ecosystem of verified products and services.",
+        "CryptoVault is a revolutionary cryptocurrency backed by real-world products and assets. Our token operates on a multi-chain infrastructure, providing holders with tangible value through our innovative backing mechanism. Each token represents a stake in our growing ecosystem of verified products and services.",
       icon: HelpCircle,
     },
     {
       id: 2,
-      question: "What makes IRONIK different from other cryptocurrencies?",
+      question: "What makes CryptoVault different from other cryptocurrencies?",
       answer:
-        "Unlike traditional cryptocurrencies, IRONIK is backed by real products and assets, providing intrinsic value. We offer multi-chain compatibility, lightning-fast transactions, and a transparent governance system. Our platform combines DeFi innovation with real-world utility.",
+        "Unlike traditional cryptocurrencies, CryptoVault is backed by real products and assets, providing intrinsic value. We offer multi-chain compatibility, lightning-fast transactions, and a transparent governance system. Our platform combines DeFi innovation with real-world utility.",
       icon: HelpCircle,
     },
     {
       id: 3,
       question: "When will the token be listed on exchanges?",
       answer:
-        "IRONIK will be listed on major decentralized exchanges (DEXs) immediately after the token sale concludes in Q4 2025. We're also in discussions with several tier-1 centralized exchanges for listings in Q1 2026. Early investors will have priority access to trading.",
+        "CryptoVault will be listed on major decentralized exchanges (DEXs) immediately after the token sale concludes in Q4 2025. We're also in discussions with several tier-1 centralized exchanges for listings in Q1 2026. Early investors will have priority access to trading.",
       icon: HelpCircle,
     },
   ],
@@ -150,7 +192,7 @@ export const faqData = {
       id: 4,
       question: "How can I participate in the token sale?",
       answer:
-        "You can participate by connecting your Web3 wallet (MetaMask, WalletConnect, etc.) to our platform and purchasing IRONIK tokens directly. The process is simple: connect wallet, choose your investment amount, confirm the transaction, and receive your tokens instantly.",
+        "You can participate by connecting your Web3 wallet (MetaMask, WalletConnect, etc.) to our platform and purchasing CryptoVault tokens directly. The process is simple: connect wallet, choose your investment amount, confirm the transaction, and receive your tokens instantly.",
       icon: Coins,
     },
     {
@@ -203,14 +245,14 @@ export const faqData = {
       id: 11,
       question: "How can I contact the support team?",
       answer:
-        "Our support team is available 24/7 through multiple channels: Telegram (@IRONIKSupport), Discord, email (support@ironik.io), and live chat on our website. For urgent issues, use our priority support line available to token holders.",
+        "Our support team is available 24/7 through multiple channels: Telegram (@CryptoVaultSupport), Discord, email (support@CryptoVault.io), and live chat on our website. For urgent issues, use our priority support line available to token holders.",
       icon: Users,
     },
     {
       id: 12,
       question: "Where can I find the latest project updates?",
       answer:
-        "Follow us on Twitter (@IRONIKOfficial), join our Telegram community (50,000+ members), subscribe to our newsletter, and check our blog for weekly development updates. We also host monthly AMA sessions with the founding team.",
+        "Follow us on Twitter (@CryptoVaultOfficial), join our Telegram community (50,000+ members), subscribe to our newsletter, and check our blog for weekly development updates. We also host monthly AMA sessions with the founding team.",
       icon: Users,
     },
     {
@@ -248,5 +290,119 @@ export const categories = [
     label: "Support",
     icon: Users,
     color: "from-pink-400 to-rose-400",
+  },
+];
+
+// Enhanced feature data with better contrast colors
+export const features = [
+  {
+    id: 1,
+    title: "Secure & Audited Smart Contracts",
+    description:
+      "Military-grade security with multi-layer audits by leading blockchain security firms.",
+    icon: Shield,
+    gradient: "from-emerald-300 to-green-300",
+    bgGradient: "from-emerald-500/30 to-green-500/30",
+    glowColor: "shadow-emerald-500/50",
+    borderColor: "border-emerald-400/60",
+    size: "large",
+    badge: "Verified",
+    badgeColor: "bg-emerald-400/20 text-emerald-200 border-emerald-300/50",
+    pattern: "dots",
+  },
+  {
+    id: 2,
+    title: "Lightning Fast",
+    description:
+      "Sub-second transaction speeds with minimal gas fees across all networks.",
+    icon: Zap,
+    gradient: "from-yellow-300 to-amber-300",
+    bgGradient: "from-yellow-500/30 to-amber-500/30",
+    glowColor: "shadow-yellow-500/50",
+    borderColor: "border-yellow-400/60",
+    size: "medium",
+    badge: "New",
+    badgeColor: "bg-yellow-400/20 text-yellow-200 border-yellow-300/50",
+    pattern: "lightning",
+  },
+  {
+    id: 3,
+    title: "DeFi Integration Ready",
+    description:
+      "Seamlessly connect with major DeFi protocols and yield farming platforms.",
+    icon: Layers,
+    gradient: "from-purple-300 to-pink-300",
+    bgGradient: "from-purple-500/30 to-pink-500/30",
+    glowColor: "shadow-purple-500/50",
+    borderColor: "border-purple-400/60",
+    size: "medium",
+    pattern: "waves",
+  },
+  {
+    id: 4,
+    title: "Multi-Chain Compatibility",
+    description:
+      "Deploy across Ethereum, BSC, Polygon, and 15+ other blockchain networks.",
+    icon: Globe,
+    gradient: "from-cyan-300 to-blue-300",
+    bgGradient: "from-cyan-500/30 to-blue-500/30",
+    glowColor: "shadow-cyan-500/50",
+    borderColor: "border-cyan-400/60",
+    size: "large",
+    pattern: "network",
+  },
+  {
+    id: 5,
+    title: "Real Product Backing",
+    description:
+      "Every token backed by tangible assets and real-world utility.",
+    icon: Gem,
+    gradient: "from-indigo-300 to-violet-300",
+    bgGradient: "from-indigo-500/30 to-violet-500/30",
+    glowColor: "shadow-indigo-500/50",
+    borderColor: "border-indigo-400/60",
+    size: "medium",
+    badge: "Most Loved",
+    badgeColor: "bg-indigo-400/20 text-indigo-200 border-indigo-300/50",
+    pattern: "gems",
+  },
+  {
+    id: 6,
+    title: "Community Governance",
+    description:
+      "Decentralized decision-making with transparent voting mechanisms.",
+    icon: Users,
+    gradient: "from-teal-300 to-emerald-300",
+    bgGradient: "from-teal-500/30 to-emerald-500/30",
+    glowColor: "shadow-teal-500/50",
+    borderColor: "border-teal-400/60",
+    size: "small",
+    pattern: "circles",
+  },
+  {
+    id: 7,
+    title: "Advanced Analytics",
+    description:
+      "Real-time insights and performance tracking for all your investments.",
+    icon: TrendingUp,
+    gradient: "from-rose-300 to-pink-300",
+    bgGradient: "from-rose-500/30 to-pink-500/30",
+    glowColor: "shadow-rose-500/50",
+    borderColor: "border-rose-400/60",
+    size: "small",
+    pattern: "charts",
+  },
+  {
+    id: 8,
+    title: "AI-Powered Security",
+    description:
+      "Machine learning algorithms detect and prevent suspicious activities.",
+    icon: Cpu,
+    gradient: "from-violet-300 to-purple-300",
+    bgGradient: "from-violet-500/30 to-purple-500/30",
+    glowColor: "shadow-violet-500/50",
+    borderColor: "border-violet-400/60",
+    size: "medium",
+    pattern: "circuit",
   },
 ];

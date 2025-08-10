@@ -303,7 +303,7 @@ export default function BlogSection() {
   const displayedBlogs = blogData.slice(0, visibleBlogs)
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section id="blog" ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-black to-blue-900/15" />
@@ -414,39 +414,6 @@ export default function BlogSection() {
           }`}
         >
           <ViewAllButton />
-        </div>
-
-        {/* Bottom stats */}
-        <div
-          className={`text-center mt-16 transition-all duration-1000 delay-1200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="inline-flex flex-wrap items-center gap-6 md:gap-8 px-10 py-6 bg-gradient-to-r from-gray-900/70 to-black/70 backdrop-blur-xl border-2 border-gray-600/50 rounded-2xl shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">50+</div>
-                <div className="text-sm text-gray-400">Articles</div>
-              </div>
-            </div>
-            <div className="w-px h-12 bg-gray-600 hidden md:block" />
-            <div className="flex gap-3 items-center">
-              <TrendingUp className="w-6 h-6 text-blue-400" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">25K+</div>
-                <div className="text-sm text-gray-400">Monthly Readers</div>
-              </div>
-            </div>
-            <div className="w-px h-12 bg-gray-600 hidden md:block" />
-            <div className="flex gap-3 items-center">
-              <Zap className="w-6 h-6 text-yellow-400" />
-              <div className="text-left">
-                <div className="text-2xl font-bold text-white">Weekly</div>
-                <div className="text-sm text-gray-400">Updates</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 

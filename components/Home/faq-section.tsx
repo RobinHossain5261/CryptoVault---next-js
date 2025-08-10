@@ -209,78 +209,6 @@ function CategoryTab({
   )
 }
 
-// Contact support CTA component
-function ContactSupportCTA() {
-  const [isHovered, setIsHovered] = useState(false)
-
-  const contactMethods = [
-    { icon: MessageCircle, label: "Live Chat", description: "24/7 instant support" },
-    { icon: Mail, label: "Email", description: "support@ironik.io" },
-    { icon: Phone, label: "Telegram", description: "@IRONIKSupport" },
-  ]
-
-  return (
-    <div className="relative mt-16">
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-blue-600/15 to-green-600/10 blur-3xl rounded-3xl" />
-
-      <Card className="relative bg-[#160e23] from-gray-900/80 to-black/80 backdrop-blur-xl border-2 border-gray-600/30 hover:border-purple-400/50 transition-all duration-500">
-        <CardContent className="p-4 md:p-8 lg:p-12 text-center">
-          <div className="space-y-8">
-            {/* Header */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl border-2 border-purple-400/30">
-                <HelpCircle className="w-8 h-8 text-purple-300" />
-              </div>
-              <h3 className="text-2xl lg:text-3xl font-bold text-white">Didn't find your answer?</h3>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                Our support team is here to help you 24/7. Get in touch through your preferred channel.
-              </p>
-            </div>
-
-            {/* Contact methods */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {contactMethods.map((method, index) => {
-                const Icon = method.icon
-                return (
-                  <div
-                    key={index}
-                    className="group p-6 bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-gray-600/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                  >
-                    <div className="space-y-4">
-                      <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-xl border border-purple-400/30 group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="w-6 h-6 text-purple-300" />
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold text-white group-hover:text-purple-200 transition-colors">
-                          {method.label}
-                        </h4>
-                        <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                          {method.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* CTA Button */}
-            <div className="pt-4">
-              <Button className="relative group bg-blue-600  hover:bg-purple-700 text-white border-0 shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 px-4 md:px-8 py-3 md:py-6 text-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-full group-hover:translate-x-[-100%]" />
-                <MessageCircle className="w-5 h-5 mr-2 relative z-10" />
-                <span className="relative z-10">Contact Support Team</span>
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
 
 export default function FAQSection() {
   const [activeCategory, setActiveCategory] = useState("general")
@@ -321,7 +249,7 @@ export default function FAQSection() {
   const rightColumnFAQs = currentFAQs.filter((_, index) => index % 2 !== 0)
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section id="faq" ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-black to-blue-900/15" />
@@ -466,15 +394,6 @@ export default function FAQSection() {
               />
             ))}
           </div>
-        </div>
-
-        {/* Contact Support CTA */}
-        <div
-          className={`transition-all duration-1000 delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <ContactSupportCTA />
         </div>
       </div>
 

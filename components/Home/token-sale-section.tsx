@@ -1,9 +1,19 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { DollarSign, Calendar, Wallet, TrendingUp, Users, Target, Zap, Shield, Rocket } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  DollarSign,
+  Calendar,
+  Wallet,
+  TrendingUp,
+  Users,
+  Target,
+  Zap,
+  Shield,
+  Rocket,
+} from "lucide-react";
 
 // Enhanced Countdown Timer Hook
 function useCountdown(targetDate: string) {
@@ -12,28 +22,30 @@ function useCountdown(targetDate: string) {
     hours: 0,
     minutes: 0,
     seconds: 0,
-  })
+  });
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = new Date().getTime()
-      const target = new Date(targetDate).getTime()
-      const difference = target - now
+      const now = new Date().getTime();
+      const target = new Date(targetDate).getTime();
+      const difference = target - now;
 
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          hours: Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          ),
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((difference % (1000 * 60)) / 1000),
-        })
+        });
       }
-    }, 1000)
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [targetDate])
+    return () => clearInterval(timer);
+  }, [targetDate]);
 
-  return timeLeft
+  return timeLeft;
 }
 
 // Creative Hexagonal Progress Component
@@ -41,23 +53,23 @@ function HexagonalProgress({
   progress,
   size = 280,
 }: {
-  progress: number
-  size?: number
+  progress: number;
+  size?: number;
 }) {
-  const points = []
-  const centerX = size / 2
-  const centerY = size / 2
-  const radius = size / 2 - 40
+  const points = [];
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const radius = size / 2 - 40;
 
   // Generate hexagon points
   for (let i = 0; i < 6; i++) {
-    const angle = (i * Math.PI) / 3
-    const x = centerX + radius * Math.cos(angle)
-    const y = centerY + radius * Math.sin(angle)
-    points.push(`${x},${y}`)
+    const angle = (i * Math.PI) / 3;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    points.push(`${x},${y}`);
   }
 
-  const hexagonPath = `M ${points.join(" L ")} Z`
+  const hexagonPath = `M ${points.join(" L ")} Z`;
 
   return (
     <div className="relative inline-flex items-center justify-center">
@@ -77,14 +89,25 @@ function HexagonalProgress({
             <stop offset="66%" stopColor="#10b981" />
             <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
-          <linearGradient id="bgHexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="bgHexGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="rgba(139, 92, 246, 0.1)" />
             <stop offset="100%" stopColor="rgba(59, 130, 246, 0.1)" />
           </linearGradient>
         </defs>
 
         {/* Background hexagon */}
-        <path d={hexagonPath} fill="url(#bgHexGradient)" stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
+        <path
+          d={hexagonPath}
+          fill="url(#bgHexGradient)"
+          stroke="rgba(255,255,255,0.1)"
+          strokeWidth="2"
+        />
 
         {/* Progress hexagon */}
         <path
@@ -99,8 +122,24 @@ function HexagonalProgress({
         />
 
         {/* Inner decorative elements */}
-        <circle cx={centerX} cy={centerY} r="20" fill="none" stroke="url(#hexGradient)" strokeWidth="2" opacity="0.5" />
-        <circle cx={centerX} cy={centerY} r="35" fill="none" stroke="url(#hexGradient)" strokeWidth="1" opacity="0.3" />
+        <circle
+          cx={centerX}
+          cy={centerY}
+          r="20"
+          fill="none"
+          stroke="url(#hexGradient)"
+          strokeWidth="2"
+          opacity="0.5"
+        />
+        <circle
+          cx={centerX}
+          cy={centerY}
+          r="35"
+          fill="none"
+          stroke="url(#hexGradient)"
+          strokeWidth="1"
+          opacity="0.3"
+        />
       </svg>
 
       {/* Center content */}
@@ -114,12 +153,12 @@ function HexagonalProgress({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Futuristic Countdown Timer
 function FuturisticCountdown({ targetDate }: { targetDate: string }) {
-  const timeLeft = useCountdown(targetDate)
+  const timeLeft = useCountdown(targetDate);
 
   return (
     <div className="relative">
@@ -136,10 +175,16 @@ function FuturisticCountdown({ targetDate }: { targetDate: string }) {
               {/* Digital display effect */}
               <div className="text-center">
                 <div className="text-3xl font-mono font-bold text-white relative">
-                  <span className="relative z-10">{value.toString().padStart(2, "0")}</span>
-                  <div className="absolute inset-0 text-purple-400/20 blur-sm">{value.toString().padStart(2, "0")}</div>
+                  <span className="relative z-10">
+                    {value.toString().padStart(2, "0")}
+                  </span>
+                  <div className="absolute inset-0 text-purple-400/20 blur-sm">
+                    {value.toString().padStart(2, "0")}
+                  </div>
                 </div>
-                <div className="text-xs text-gray-400 uppercase tracking-widest mt-2 font-semibold">{unit}</div>
+                <div className="text-xs text-gray-400 uppercase tracking-widest mt-2 font-semibold">
+                  {unit}
+                </div>
               </div>
 
               {/* Corner accents */}
@@ -152,7 +197,7 @@ function FuturisticCountdown({ targetDate }: { targetDate: string }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // Creative Info Card with Holographic Effect
@@ -163,13 +208,13 @@ function HolographicCard({
   accent = false,
   delay = 0,
 }: {
-  icon: any
-  label: string
-  value: string
-  accent?: boolean
-  delay?: number
+  icon: any;
+  label: string;
+  value: string;
+  accent?: boolean;
+  delay?: number;
 }) {
-  const [isHovered, setIsHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
@@ -211,20 +256,30 @@ function HolographicCard({
               >
                 <Icon
                   className={`w-6 h-6 transition-all duration-300 ${
-                    accent ? "text-purple-400 group-hover:text-purple-300" : "text-gray-400 group-hover:text-gray-300"
+                    accent
+                      ? "text-purple-400 group-hover:text-purple-300"
+                      : "text-gray-400 group-hover:text-gray-300"
                   }`}
                 />
               </div>
 
               {/* Status indicator */}
-              <div className={`w-2 h-2 rounded-full ${accent ? "bg-green-400" : "bg-blue-400"} animate-pulse`} />
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  accent ? "bg-green-400" : "bg-blue-400"
+                } animate-pulse`}
+              />
             </div>
 
             <div className="space-y-2">
-              <span className="text-gray-400 text-sm font-medium tracking-wide">{label}</span>
+              <span className="text-gray-400 text-sm font-medium tracking-wide">
+                {label}
+              </span>
               <div
                 className={`text-lg md:text-xl font-bold transition-all duration-300 ${
-                  accent ? "text-white group-hover:text-purple-200" : "text-gray-200 group-hover:text-white"
+                  accent
+                    ? "text-white group-hover:text-purple-200"
+                    : "text-gray-200 group-hover:text-white"
                 }`}
               >
                 {value}
@@ -234,16 +289,19 @@ function HolographicCard({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
 export default function TokenSaleSection() {
-  const raisedAmount = 42000000
-  const targetAmount = 60000000
-  const progress = (raisedAmount / targetAmount) * 100
+  const raisedAmount = 42000000;
+  const targetAmount = 60000000;
+  const progress = (raisedAmount / targetAmount) * 100;
 
   return (
-    <section className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section
+      id="sale"
+      className="relative py-20 lg:py-32 bg-black overflow-hidden"
+    >
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
@@ -273,10 +331,10 @@ export default function TokenSaleSection() {
               i % 4 === 0
                 ? "bg-purple-400/30"
                 : i % 4 === 1
-                  ? "bg-blue-400/30"
-                  : i % 4 === 2
-                    ? "bg-green-400/30"
-                    : "bg-yellow-400/30"
+                ? "bg-blue-400/30"
+                : i % 4 === 2
+                ? "bg-green-400/30"
+                : "bg-yellow-400/30"
             }`}
             style={{
               width: `${Math.random() * 8 + 4}px`,
@@ -318,7 +376,9 @@ export default function TokenSaleSection() {
               <div className="space-y-4 p-6 bg-gradient-to-r from-gray-900/30 to-black/30 backdrop-blur-sm border border-gray-700/30 rounded-2xl">
                 <div className="flex items-center space-x-3 justify-center lg:justify-start">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-green-400 text-sm font-semibold tracking-wide">LIVE SALE</span>
+                  <span className="text-green-400 text-sm font-semibold tracking-wide">
+                    LIVE SALE
+                  </span>
                 </div>
 
                 <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold">
@@ -329,7 +389,8 @@ export default function TokenSaleSection() {
                 </h2>
 
                 <p className="text-xl text-gray-300">
-                  Join our revolutionary token sale and secure your share of the future.
+                  Join our revolutionary token sale and secure your share of the
+                  future.
                 </p>
               </div>
             </div>
@@ -340,7 +401,10 @@ export default function TokenSaleSection() {
                 <HexagonalProgress progress={progress} size={270} />
 
                 {/* Orbiting elements */}
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: "20s" }}>
+                <div
+                  className="absolute inset-0 animate-spin"
+                  style={{ animationDuration: "20s" }}
+                >
                   <div className="absolute top-4 left-1/2 w-2 h-2 bg-purple-400 rounded-full transform -translate-x-1/2" />
                   <div className="absolute bottom-4 left-1/2 w-2 h-2 bg-blue-400 rounded-full transform -translate-x-1/2" />
                   <div className="absolute left-4 top-1/2 w-2 h-2 bg-green-400 rounded-full transform -translate-y-1/2" />
@@ -357,17 +421,24 @@ export default function TokenSaleSection() {
                   <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
                     ${raisedAmount.toLocaleString()}
                   </span>
-                  <span className="text-gray-500"> / ${targetAmount.toLocaleString()}</span>
+                  <span className="text-gray-500">
+                    {" "}
+                    / ${targetAmount.toLocaleString()}
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-center lg:justify-start space-x-4">
                   <div className="flex items-center space-x-2">
                     <Rocket className="w-4 h-4 text-purple-400" />
-                    <span className="text-purple-300 text-sm font-medium">Phase 2 of 3</span>
+                    <span className="text-purple-300 text-sm font-medium">
+                      Phase 2 of 3
+                    </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Shield className="w-4 h-4 text-green-400" />
-                    <span className="text-green-300 text-sm font-medium">Verified</span>
+                    <span className="text-green-300 text-sm font-medium">
+                      Verified
+                    </span>
                   </div>
                 </div>
               </div>
@@ -409,18 +480,44 @@ export default function TokenSaleSection() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
-              <HolographicCard icon={Target} label="Token Symbol" value="$IRONIK" accent={true} delay={0} />
+              <HolographicCard
+                icon={Target}
+                label="Token Symbol"
+                value="$CryptoVault"
+                accent={true}
+                delay={0}
+              />
               <HolographicCard
                 icon={DollarSign}
                 label="Token Price"
-                value="1 IRONIK = $0.10"
+                value="1 CryptoVault = $0.10"
                 accent={true}
                 delay={100}
               />
-              <HolographicCard icon={TrendingUp} label="Total Supply" value="1,000,000,000" delay={200} />
-              <HolographicCard icon={Users} label="Tokens Available" value="600,000,000" delay={300} />
-              <HolographicCard icon={Calendar} label="Sale Ends" value="September 15, 2025" delay={400} />
-              <HolographicCard icon={Wallet} label="Accepted Payments" value="ETH, BNB, USDT" delay={500} />
+              <HolographicCard
+                icon={TrendingUp}
+                label="Total Supply"
+                value="1,000,000,000"
+                delay={200}
+              />
+              <HolographicCard
+                icon={Users}
+                label="Tokens Available"
+                value="600,000,000"
+                delay={300}
+              />
+              <HolographicCard
+                icon={Calendar}
+                label="Sale Ends"
+                value="September 15, 2025"
+                delay={400}
+              />
+              <HolographicCard
+                icon={Wallet}
+                label="Accepted Payments"
+                value="ETH, BNB, USDT"
+                delay={500}
+              />
             </div>
 
             {/* Enhanced Stats Panel */}
@@ -469,5 +566,5 @@ export default function TokenSaleSection() {
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-purple-600/10 via-blue-600/5 to-transparent" />
       <div className="absolute bottom-0 right-0 w-96 h-32 bg-gradient-to-t from-green-600/10 to-transparent blur-3xl" />
     </section>
-  )
+  );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header/Header";
+import FooterSection from "@/components/Footer/footer-section";
 
 export const metadata: Metadata = {
   title: "Home - CryptoVault",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
+        <FooterSection/>
       </body>
     </html>
   );
