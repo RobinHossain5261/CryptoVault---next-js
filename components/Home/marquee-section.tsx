@@ -1,7 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 
 // Enhanced partner data with more creative elements
 const partnerLogos = [
@@ -75,16 +76,21 @@ const announcements = [
 
 // Creative floating orb component
 function FloatingOrb({ delay, size, color }: { delay: number; size: number; color: string }) {
+  const [style] = useState(() => ({
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    animationDuration: 3 + Math.random() * 4,
+  }))
   return (
     <div
       className={`absolute rounded-full ${color} animate-pulse opacity-20`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
+        left: `${style.left}%`,
+        top: `${style.top}%`,
         animationDelay: `${delay}s`,
-        animationDuration: `${3 + Math.random() * 4}s`,
+        animationDuration: `${style.animationDuration}s`,
       }}
     />
   )
@@ -262,6 +268,16 @@ function CreativeMarqueeRow({
 }
 
 export default function MarqueeSection() {
+  const mounted = useMounted()
+  const orbs = useMemo(() => {
+    if (!mounted) return []
+    const colors = ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-yellow-400", "bg-pink-400"]
+    return Array.from({ length: 25 }).map(() => ({
+      size: Math.random() * 20 + 10,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }))
+  }, [mounted])
+
   return (
     <section className="relative py-20 bg-black overflow-hidden">
       {/* Creative background layers */}
@@ -285,21 +301,14 @@ export default function MarqueeSection() {
         />
       </div>
 
-      {/* Floating orbs */}
-      <div className="absolute inset-0">
-        {[...Array(25)].map((_, i) => (
-          <FloatingOrb
-            key={i}
-            delay={i * 0.5}
-            size={Math.random() * 20 + 10}
-            color={
-              ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-yellow-400", "bg-pink-400"][
-                Math.floor(Math.random() * 5)
-              ]
-            }
-          />
-        ))}
-      </div>
+      {/* Floating orbs (client-only to avoid hydration mismatch) */}
+      {mounted && (
+        <div className="absolute inset-0">
+          {orbs.map((o, i) => (
+            <FloatingOrb key={i} delay={i * 0.5} size={o.size} color={o.color} />
+          ))}
+        </div>
+      )}
 
       {/* Scanning lines */}
       <div className="absolute inset-0">
@@ -357,32 +366,6 @@ export default function MarqueeSection() {
       <div className="absolute bottom-0 left-1/4 w-96 h-32 bg-gradient-to-t from-purple-600/10 to-transparent blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-32 bg-gradient-to-t from-blue-600/10 to-transparent blur-3xl" />
 
-      {/* Enhanced CSS animations */}
-      <style jsx>{`
-        @keyframes marquee-left {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
-        }
-
-        @keyframes marquee-right {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0%); }
-        }
-
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-
-        /* Creative glow effects */
-        @keyframes glow-pulse {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
-        }
-
-        .animate-glow {
-          animation: glow-pulse 2s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   )
 }

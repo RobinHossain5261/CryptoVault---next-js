@@ -1,8 +1,9 @@
-"use client"
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+"use client";
+import type React from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useMounted } from "@/hooks/use-mounted";
 import {
   CheckCircle,
   Rocket,
@@ -16,7 +17,7 @@ import {
   Zap,
   TrendingUp,
   Network,
-} from "lucide-react"
+} from "lucide-react";
 
 // Roadmap data with enhanced properties
 const roadmapData = [
@@ -24,7 +25,8 @@ const roadmapData = [
     id: 1,
     quarter: "Q1 2025",
     title: "Whitepaper Release",
-    description: "Comprehensive documentation outlining our vision, technology, and tokenomics.",
+    description:
+      "Comprehensive documentation outlining our vision, technology, and tokenomics.",
     icon: FileText,
     status: "completed",
     statusIcon: CheckCircle,
@@ -38,7 +40,8 @@ const roadmapData = [
     id: 2,
     quarter: "Q2 2025",
     title: "Smart Contract Audit",
-    description: "Multi-layer security audits by leading blockchain security firms for maximum protection.",
+    description:
+      "Multi-layer security audits by leading blockchain security firms for maximum protection.",
     icon: Shield,
     status: "completed",
     statusIcon: CheckCircle,
@@ -52,7 +55,8 @@ const roadmapData = [
     id: 3,
     quarter: "Q3 2025",
     title: "Token Sale (ICO Phase 1)",
-    description: "Public token sale launch with early bird bonuses and exclusive access for community members.",
+    description:
+      "Public token sale launch with early bird bonuses and exclusive access for community members.",
     icon: Coins,
     status: "in-progress",
     statusIcon: Rocket,
@@ -66,7 +70,8 @@ const roadmapData = [
     id: 4,
     quarter: "Q4 2025",
     title: "Exchange Listing & Mobile App Beta",
-    description: "Listed on major DEXs and CEXs with beta release of our mobile application.",
+    description:
+      "Listed on major DEXs and CEXs with beta release of our mobile application.",
     icon: Smartphone,
     status: "upcoming",
     statusIcon: Clock,
@@ -80,7 +85,8 @@ const roadmapData = [
     id: 5,
     quarter: "Q1 2026",
     title: "Launch DAO Governance",
-    description: "Decentralized autonomous organization with community-driven decision making and voting mechanisms.",
+    description:
+      "Decentralized autonomous organization with community-driven decision making and voting mechanisms.",
     icon: Users,
     status: "upcoming",
     statusIcon: Clock,
@@ -94,7 +100,8 @@ const roadmapData = [
     id: 6,
     quarter: "Q2 2026",
     title: "Global Expansion & Partnerships",
-    description: "Strategic partnerships with major institutions and expansion into new markets worldwide.",
+    description:
+      "Strategic partnerships with major institutions and expansion into new markets worldwide.",
     icon: Globe,
     status: "upcoming",
     statusIcon: Clock,
@@ -108,7 +115,8 @@ const roadmapData = [
     id: 7,
     quarter: "Q3 2026",
     title: "Advanced DeFi Features",
-    description: "Launch of yield farming, liquidity mining, and advanced trading features for maximum returns.",
+    description:
+      "Launch of yield farming, liquidity mining, and advanced trading features for maximum returns.",
     icon: TrendingUp,
     status: "upcoming",
     statusIcon: Clock,
@@ -122,7 +130,8 @@ const roadmapData = [
     id: 8,
     quarter: "Q4 2026",
     title: "Multi-Chain Integration",
-    description: "Cross-chain compatibility with Ethereum, BSC, Polygon, and other major blockchain networks.",
+    description:
+      "Cross-chain compatibility with Ethereum, BSC, Polygon, and other major blockchain networks.",
     icon: Network,
     status: "upcoming",
     statusIcon: Clock,
@@ -132,10 +141,16 @@ const roadmapData = [
     borderColor: "border-violet-400/60",
     category: "future",
   },
-]
+];
 
 // Animated timeline connector
-function TimelineConnector({ isActive, delay }: { isActive: boolean; delay: number }) {
+function TimelineConnector({
+  isActive,
+  delay,
+}: {
+  isActive: boolean;
+  delay: number;
+}) {
   return (
     <div className="relative flex-1 h-1 mx-4">
       {/* Base line */}
@@ -154,52 +169,60 @@ function TimelineConnector({ isActive, delay }: { isActive: boolean; delay: numb
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full animate-pulse" />
       )}
     </div>
-  )
+  );
 }
 
 // Enhanced roadmap milestone card
-function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; index: number; isVisible: boolean }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const cardRef = useRef<HTMLDivElement>(null)
+function RoadmapMilestone({
+  milestone,
+  index,
+  isVisible,
+}: {
+  milestone: any;
+  index: number;
+  isVisible: boolean;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
     setMousePosition({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
-    })
-  }
+    });
+  };
 
-  const Icon = milestone.icon
-  const StatusIcon = milestone.statusIcon
+  const Icon = milestone.icon;
+  const StatusIcon = milestone.statusIcon;
 
   const getStatusColor = () => {
     switch (milestone.status) {
       case "completed":
-        return "text-emerald-400"
+        return "text-emerald-400";
       case "in-progress":
-        return "text-yellow-400"
+        return "text-yellow-400";
       case "upcoming":
-        return "text-gray-400"
+        return "text-gray-400";
       default:
-        return "text-gray-400"
+        return "text-gray-400";
     }
-  }
+  };
 
   const getStatusBg = () => {
     switch (milestone.status) {
       case "completed":
-        return "bg-emerald-500/20 border-emerald-400/50"
+        return "bg-emerald-500/20 border-emerald-400/50";
       case "in-progress":
-        return "bg-yellow-500/20 border-yellow-400/50"
+        return "bg-yellow-500/20 border-yellow-400/50";
       case "upcoming":
-        return "bg-gray-500/20 border-gray-400/50"
+        return "bg-gray-500/20 border-gray-400/50";
       default:
-        return "bg-gray-500/20 border-gray-400/50"
+        return "bg-gray-500/20 border-gray-400/50";
     }
-  }
+  };
 
   return (
     <div
@@ -215,8 +238,8 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
             milestone.status === "completed"
               ? "bg-emerald-400 shadow-lg shadow-emerald-400/50"
               : milestone.status === "in-progress"
-                ? "bg-yellow-400 shadow-lg shadow-yellow-400/50 animate-pulse"
-                : "bg-gray-600"
+              ? "bg-yellow-400 shadow-lg shadow-yellow-400/50 animate-pulse"
+              : "bg-gray-600"
           }`}
         />
       </div>
@@ -226,9 +249,11 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
         ref={cardRef}
         className={`relative bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-xl border-2 transition-all duration-700 overflow-hidden cursor-pointer ${
           milestone.borderColor
-        } ${isHovered ? `scale-105 ${milestone.glowColor} shadow-2xl` : "shadow-lg"} ${
-          index % 2 === 0 ? "lg:mt-16" : "lg:mb-16"
-        }`}
+        } ${
+          isHovered
+            ? `scale-105 ${milestone.glowColor} shadow-2xl`
+            : "shadow-lg"
+        } ${index % 2 === 0 ? "lg:mt-16" : "lg:mb-16"}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={handleMouseMove}
@@ -274,7 +299,9 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
               </div>
               <h3
                 className={`text-xl lg:text-2xl font-bold transition-all duration-300 ${
-                  isHovered ? `bg-gradient-to-r ${milestone.gradient} bg-clip-text text-transparent` : "text-white"
+                  isHovered
+                    ? `bg-gradient-to-r ${milestone.gradient} bg-clip-text text-transparent`
+                    : "text-white"
                 }`}
               >
                 {milestone.title}
@@ -283,17 +310,25 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
 
             {/* Icon */}
             <div
-              className={`flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-2xl bg-gradient-to-br ${milestone.bgGradient} border-2 ${milestone.borderColor} transition-all duration-500 ${
+              className={`flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-2xl bg-gradient-to-br ${
+                milestone.bgGradient
+              } border-2 ${milestone.borderColor} transition-all duration-500 ${
                 isHovered ? "scale-110 rotate-3" : ""
               }`}
             >
-              <Icon className={`w-4 h-4  md:w-8 md:h-8 text-white transition-all duration-300 ${isHovered ? "scale-110" : ""}`} />
+              <Icon
+                className={`w-4 h-4  md:w-8 md:h-8 text-white transition-all duration-300 ${
+                  isHovered ? "scale-110" : ""
+                }`}
+              />
             </div>
           </div>
 
           {/* Description */}
           <p
-            className={`text-gray-300 leading-relaxed transition-all duration-300 ${isHovered ? "text-gray-200" : ""}`}
+            className={`text-gray-300 leading-relaxed transition-all duration-300 ${
+              isHovered ? "text-gray-200" : ""
+            }`}
           >
             {milestone.description}
           </p>
@@ -302,7 +337,9 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
           {milestone.status === "in-progress" && (
             <div className="mt-6">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-yellow-400">In Progress</span>
+                <span className="text-sm font-semibold text-yellow-400">
+                  In Progress
+                </span>
                 <span className="text-sm text-gray-400">75%</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -313,25 +350,28 @@ function RoadmapMilestone({ milestone, index, isVisible }: { milestone: any; ind
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
 // Filter buttons component
 function FilterButtons({
   activeFilter,
   setActiveFilter,
-}: { activeFilter: string; setActiveFilter: (filter: string) => void }) {
+}: {
+  activeFilter: string;
+  setActiveFilter: (filter: string) => void;
+}) {
   const filters = [
     { key: "all", label: "All Phases", icon: Zap },
     { key: "past", label: "Completed", icon: CheckCircle },
     { key: "current", label: "In Progress", icon: Rocket },
     { key: "future", label: "Upcoming", icon: Clock },
-  ]
+  ];
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-8 md:mb-16">
       {filters.map((filter) => {
-        const Icon = filter.icon
+        const Icon = filter.icon;
         return (
           <Button
             key={filter.key}
@@ -345,40 +385,64 @@ function FilterButtons({
             <Icon className="w-4 h-4 mr-2" />
             {filter.label}
           </Button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 export default function RoadmapSection() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [activeFilter, setActiveFilter] = useState("all")
-  const sectionRef = useRef<HTMLElement>(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const mounted = useMounted();
+  const particles = useMemo(() => {
+    if (!mounted) return [];
+    const colors = [
+      "bg-purple-400/20",
+      "bg-blue-400/20",
+      "bg-cyan-400/20",
+      "bg-pink-400/20",
+    ];
+    return Array.from({ length: 25 }).map(() => ({
+      width: Math.random() * 8 + 4,
+      height: Math.random() * 8 + 4,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: Math.random() * 3,
+      animationDuration: 3 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }));
+  }, [mounted]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
-      { threshold: 0.1 },
-    )
+      { threshold: 0.1 }
+    );
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const filteredMilestones = roadmapData.filter(
-    (milestone) => activeFilter === "all" || milestone.category === activeFilter,
-  )
+    (milestone) => activeFilter === "all" || milestone.category === activeFilter
+  );
 
   return (
-    <section id="roadmap" ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
+    <section
+      id="roadmap"
+      ref={sectionRef}
+      className="relative py-20 lg:py-32 bg-black overflow-hidden"
+    >
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-black to-blue-900/15" />
@@ -399,25 +463,25 @@ export default function RoadmapSection() {
         />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {[...Array(25)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute rounded-full animate-pulse ${
-              ["bg-purple-400/20", "bg-blue-400/20", "bg-cyan-400/20", "bg-pink-400/20"][Math.floor(Math.random() * 4)]
-            }`}
-            style={{
-              width: `${Math.random() * 8 + 4}px`,
-              height: `${Math.random() * 8 + 4}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Floating particles (client-only to avoid hydration mismatch) */}
+      {mounted && (
+        <div className="absolute inset-0">
+          {particles.map((p, i) => (
+            <div
+              key={i}
+              className={`absolute rounded-full animate-pulse ${p.color}`}
+              style={{
+                width: `${p.width}px`,
+                height: `${p.height}px`,
+                left: `${p.left}%`,
+                top: `${p.top}%`,
+                animationDelay: `${p.animationDelay}s`,
+                animationDuration: `${p.animationDuration}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-12">
         {/* Section header */}
@@ -443,11 +507,15 @@ export default function RoadmapSection() {
           </h2>
 
           <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-medium leading-relaxed mb-8 md:mb-12">
-            A transparent plan of our growth, development, and innovation milestones
+            A transparent plan of our growth, development, and innovation
+            milestones
           </p>
 
           {/* Filter buttons */}
-          <FilterButtons activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+          <FilterButtons
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
+          />
         </div>
 
         {/* Desktop Timeline */}
@@ -457,7 +525,9 @@ export default function RoadmapSection() {
             <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded-full" />
             <div
               className={`absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 rounded-full transition-all duration-2000 ${
-                isVisible ? "opacity-100 shadow-lg shadow-purple-500/30" : "opacity-0"
+                isVisible
+                  ? "opacity-100 shadow-lg shadow-purple-500/30"
+                  : "opacity-0"
               }`}
             />
 
@@ -470,7 +540,12 @@ export default function RoadmapSection() {
           {/* Milestones grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-4 gap-4 xl:gap-8">
             {filteredMilestones.map((milestone, index) => (
-              <RoadmapMilestone key={milestone.id} milestone={milestone} index={index} isVisible={isVisible} />
+              <RoadmapMilestone
+                key={milestone.id}
+                milestone={milestone}
+                index={index}
+                isVisible={isVisible}
+              />
             ))}
           </div>
         </div>
@@ -491,14 +566,18 @@ export default function RoadmapSection() {
                     milestone.status === "completed"
                       ? "bg-emerald-400 shadow-lg shadow-emerald-400/50"
                       : milestone.status === "in-progress"
-                        ? "bg-yellow-400 shadow-lg shadow-yellow-400/50 animate-pulse"
-                        : "bg-gray-600"
+                      ? "bg-yellow-400 shadow-lg shadow-yellow-400/50 animate-pulse"
+                      : "bg-gray-600"
                   }`}
                 />
 
                 {/* Card */}
                 <div className="flex-1">
-                  <RoadmapMilestone milestone={milestone} index={index} isVisible={isVisible} />
+                  <RoadmapMilestone
+                    milestone={milestone}
+                    index={index}
+                    isVisible={isVisible}
+                  />
                 </div>
               </div>
             </div>
@@ -509,13 +588,6 @@ export default function RoadmapSection() {
       {/* Bottom glow effects */}
       <div className="absolute bottom-0 left-1/4 w-96 h-32 bg-gradient-to-t from-purple-600/15 to-transparent blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-32 bg-gradient-to-t from-cyan-600/15 to-transparent blur-3xl" />
-
-      {/* Custom CSS */}
-      <style jsx>{`
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
     </section>
-  )
+  );
 }

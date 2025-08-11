@@ -4,6 +4,8 @@ import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { headerData } from "@/public/fakeData/fakeData";
+import Image from "next/image";
+import logo from "@/public/logo.png";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileOpen] = useState(false);
@@ -28,11 +30,9 @@ const Header = () => {
       <header className="fixed top-0 w-full bg-black border-b border-gray-700 z-50 flex items-center justify-between p-6 lg:px-12">
         {/* Logo */}
         <div className="flex items-center space-x-3">
-          {/* <div className="relative">
-          <Cube className="w-8 h-8 text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 rounded blur-sm opacity-50" />
-        </div> */}
-          <span className="text-xl font-bold text-white">CryptoVault</span>
+          <Link href="/">
+            <Image src={logo} alt="logo" />
+          </Link>
         </div>
 
         {/* Navigation */}
@@ -75,7 +75,9 @@ const Header = () => {
         ref={refOne}
       >
         <div className="flex justify-between gap-2 items-center text-white pb-4 border-b border-gray-700">
-          <h3 className=" text-2xl font-semibold">CryptoVault</h3>
+          <Link href="/">
+            <Image src={logo} alt="logo" />
+          </Link>
           <X
             className="cursor-pointer"
             onClick={() => setIsMobileOpen((prev) => !prev)}

@@ -2,13 +2,14 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, TrendingUp, Zap, Clock, User, Calendar } from "lucide-react" // Added User and Calendar
+import { ArrowRight, Clock, User, Calendar } from "lucide-react" // Added User and Calendar
 import Image from "next/image"
 import { blogData } from "@/public/fakeData/fakeData"
 import Link from "next/link"
+import { useMounted } from "@/hooks/use-mounted"
 
 // Floating particles component
 function FloatingParticle({
@@ -20,16 +21,22 @@ function FloatingParticle({
   size: number
   color: string
 }) {
+  const [style] = useState(() => ({
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    animationDelay: Math.random() * 4, // seconds
+    animationDuration: 3 + Math.random() * 4, // seconds
+  }))
   return (
     <div
       className={`absolute rounded-full ${color} animate-pulse opacity-20`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        animationDelay: `${delay}s`,
-        animationDuration: `${3 + Math.random() * 4}s`,
+        left: `${style.left}%`,
+        top: `${style.top}%`,
+        animationDelay: `${delay + style.animationDelay}s`,
+        animationDuration: `${style.animationDuration}s`,
       }}
     />
   )
@@ -283,6 +290,16 @@ export default function BlogSection() {
   const [visibleBlogs, setVisibleBlogs] = useState(3) // Show 3 blogs initially
   const sectionRef = useRef<HTMLElement>(null)
 
+  const mounted = useMounted()
+  const particles = useMemo(() => {
+    if (!mounted) return []
+    const colors = ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-pink-400", "bg-cyan-400"]
+    return Array.from({ length: 25 }).map(() => ({
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }))
+  }, [mounted])
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -324,21 +341,14 @@ export default function BlogSection() {
         />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {[...Array(25)].map((_, i) => (
-          <FloatingParticle
-            key={i}
-            delay={i * 0.4}
-            size={Math.random() * 8 + 4}
-            color={
-              ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-pink-400", "bg-cyan-400"][
-                Math.floor(Math.random() * 5)
-              ]
-            }
-          />
-        ))}
-      </div>
+      {/* Floating particles (client-only to avoid hydration mismatch) */}
+      {mounted && (
+        <div className="absolute inset-0">
+          {particles.map((p, i) => (
+            <FloatingParticle key={i} delay={i * 0.4} size={p.size} color={p.color} />
+          ))}
+        </div>
+      )}
 
       {/* Scanning lines */}
       <div className="absolute inset-0">
@@ -421,7 +431,6 @@ export default function BlogSection() {
       <div className="absolute bottom-0 left-1/4 w-96 h-40 bg-gradient-to-t from-purple-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-40 bg-gradient-to-t from-blue-600/20 to-transparent blur-3xl" />
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-40 bg-gradient-to-t from-green-600/15 to-transparent blur-3xl" />
-
     </section>
   )
 }

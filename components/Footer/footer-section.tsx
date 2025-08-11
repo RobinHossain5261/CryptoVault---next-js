@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState, useRef, useEffect, useMemo } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   ArrowRight,
   Mail,
@@ -18,11 +18,11 @@ import {
   BookOpen,
   MessageCircle,
   Phone,
-  Info,
   Map,
   Zap,
-} from "lucide-react";
-import Link from "next/link";
+} from "lucide-react"
+import Link from "next/link"
+import { useMounted } from "@/hooks/use-mounted"
 
 // Navigation links data
 const navigationLinks = {
@@ -49,13 +49,13 @@ const navigationLinks = {
     },
     { name: "Join Presale", href: "#", icon: Users },
   ],
-};
+}
 
 // Legal links
 const legalLinks = [
   { name: "Privacy Policy", href: "#" },
   { name: "Terms of Use", href: "#" },
-];
+]
 
 // Toast notification component
 function Toast({
@@ -64,21 +64,21 @@ function Toast({
   isVisible,
   onClose,
 }: {
-  message: string;
-  type: "success" | "error";
-  isVisible: boolean;
-  onClose: () => void;
+  message: string
+  type: "success" | "error"
+  isVisible: boolean
+  onClose: () => void
 }) {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
-        onClose();
-      }, 5000);
-      return () => clearTimeout(timer);
+        onClose()
+      }, 5000)
+      return () => clearTimeout(timer)
     }
-  }, [isVisible, onClose]);
+  }, [isVisible, onClose])
 
-  if (!isVisible) return null;
+  if (!isVisible) return null
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom duration-300">
@@ -95,82 +95,78 @@ function Toast({
           <AlertCircle className="w-6 h-6 text-red-400" />
         )}
         <span className="font-medium">{message}</span>
-        <button
-          onClick={onClose}
-          className="ml-2 text-gray-400 hover:text-white transition-colors"
-        >
+        <button onClick={onClose} className="ml-2 text-gray-400 hover:text-white transition-colors">
           ×
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 // Newsletter subscription component
 function NewsletterSubscription() {
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState("")
   const [toast, setToast] = useState<{
-    message: string;
-    type: "success" | "error";
-    isVisible: boolean;
+    message: string
+    type: "success" | "error"
+    isVisible: boolean
   }>({
     message: "",
     type: "success",
     isVisible: false,
-  });
+  })
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!email.trim()) {
-      setError("Email is required");
-      return;
+      setError("Email is required")
+      return
     }
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
+      setError("Please enter a valid email address")
+      return
     }
 
-    setIsSubmitting(true);
-    setError("");
+    setIsSubmitting(true)
+    setError("")
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
       setToast({
-        message:
-          "🎉 Successfully subscribed! Welcome to the CryptoVault community.",
+        message: "🎉 Successfully subscribed! Welcome to the CryptoVault community.",
         type: "success",
         isVisible: true,
-      });
+      })
 
-      setEmail("");
+      setEmail("")
     } catch (error) {
       setToast({
         message: "Failed to subscribe. Please try again.",
         type: "error",
         isVisible: true,
-      });
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value)
     if (error) {
-      setError("");
+      setError("")
     }
-  };
+  }
 
   return (
     <>
@@ -185,8 +181,8 @@ function NewsletterSubscription() {
         <div className="space-y-3">
           <h3 className="text-xl font-bold text-white">Stay Updated</h3>
           <p className="text-gray-400 text-base leading-relaxed">
-            Subscribe for the latest updates, token announcements, and exclusive
-            insights from the CryptoVault ecosystem.
+            Subscribe for the latest updates, token announcements, and exclusive insights from the CryptoVault
+            ecosystem.
           </p>
         </div>
 
@@ -234,7 +230,7 @@ function NewsletterSubscription() {
         </form>
       </div>
     </>
-  );
+  )
 }
 
 // Brand section component
@@ -252,13 +248,12 @@ function BrandSection({ isVisible }: { isVisible: boolean }) {
         </h2>
 
         <p className="text-gray-400 text-base leading-relaxed">
-          CryptoVault is a blockchain-powered platform built to redefine
-          financial accessibility through decentralized innovation, empowering
-          users with cutting-edge DeFi solutions.
+          CryptoVault is a blockchain-powered platform built to redefine financial accessibility through decentralized
+          innovation, empowering users with cutting-edge DeFi solutions.
         </p>
       </div>
     </div>
-  );
+  )
 }
 
 // Navigation links component
@@ -268,10 +263,10 @@ function NavigationLinks({
   isVisible,
   delay = 0,
 }: {
-  title: string;
-  links: any[];
-  isVisible: boolean;
-  delay?: number;
+  title: string
+  links: any[]
+  isVisible: boolean
+  delay?: number
 }) {
   return (
     <div
@@ -283,7 +278,7 @@ function NavigationLinks({
       <h3 className="text-xl font-bold text-white">{title}</h3>
       <ul className="space-y-3">
         {links.map((link) => {
-          const IconComponent = link.icon;
+          const IconComponent = link.icon
           return (
             <li key={link.name}>
               <Link
@@ -299,39 +294,47 @@ function NavigationLinks({
                 )}
               </Link>
             </li>
-          );
+          )
         })}
       </ul>
     </div>
-  );
+  )
 }
 
 export default function FooterSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setIsVisible(true)
         }
       },
-      { threshold: 0.1 }
-    );
+      { threshold: 0.1 },
+    )
 
     if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+      observer.observe(sectionRef.current)
     }
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
+
+  const mounted = useMounted()
+  const particles = useMemo(() => {
+    if (!mounted) return []
+    return Array.from({ length: 15 }).map((_, i) => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: i * 0.5,
+      animationDuration: 3 + Math.random() * 4,
+    }))
+  }, [mounted])
 
   return (
-    <footer
-      ref={sectionRef}
-      className="relative bg-black border-t border-gray-800/50 overflow-hidden"
-    >
+    <footer ref={sectionRef} className="relative bg-black border-t border-gray-800/50 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent" />
@@ -352,21 +355,23 @@ export default function FooterSection() {
         />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse opacity-20"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Floating particles (client-only to avoid hydration mismatch) */}
+      {mounted && (
+        <div className="absolute inset-0">
+          {particles.map((p, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse opacity-20"
+              style={{
+                left: `${p.left}%`,
+                top: `${p.top}%`,
+                animationDelay: `${p.animationDelay}s`,
+                animationDuration: `${p.animationDuration}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="relative z-10">
         {/* Main footer content */}
@@ -389,20 +394,13 @@ export default function FooterSection() {
 
             {/* Column 3: Token Info */}
             <div className="col-span-12 sm:col-span-6 lg:col-span-2">
-              <NavigationLinks
-                title="Token Info"
-                links={navigationLinks.tokenInfo}
-                isVisible={isVisible}
-                delay={400}
-              />
+              <NavigationLinks title="Token Info" links={navigationLinks.tokenInfo} isVisible={isVisible} delay={400} />
             </div>
 
             {/* Column 4: Newsletter */}
             <div
               className={`col-span-12 sm:col-span-6 lg:col-span-4 transition-all duration-1000 ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: "600ms" }}
             >
@@ -428,9 +426,7 @@ export default function FooterSection() {
             {/* Copyright */}
             <div className="flex items-center gap-4">
               <p className="text-gray-400 text-sm">
-                © 2025{" "}
-                <span className="text-white font-semibold">CryptoVault</span>.
-                All rights reserved.
+                © 2025 <span className="text-white font-semibold">CryptoVault</span>. All rights reserved.
               </p>
             </div>
 
@@ -444,9 +440,7 @@ export default function FooterSection() {
                   >
                     {link.name}
                   </Link>
-                  {index < legalLinks.length - 1 && (
-                    <div className="w-px h-3 bg-gray-600" />
-                  )}
+                  {index < legalLinks.length - 1 && <div className="w-px h-3 bg-gray-600" />}
                 </div>
               ))}
             </div>
@@ -458,5 +452,5 @@ export default function FooterSection() {
       <div className="absolute bottom-0 left-1/4 w-96 h-32 bg-gradient-to-t from-purple-600/10 to-transparent blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-32 bg-gradient-to-t from-blue-600/10 to-transparent blur-3xl" />
     </footer>
-  );
+  )
 }

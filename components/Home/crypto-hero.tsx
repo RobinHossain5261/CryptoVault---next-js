@@ -114,10 +114,10 @@ export default function CryptoHero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-20 lg:pt-32">
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-28 lg:pt-32">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-8">
             {/* Label */}
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-900/50 to-blue-900/50 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 py-2">
               <span className="text-purple-300 text-sm font-medium tracking-wide">

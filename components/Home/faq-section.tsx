@@ -1,25 +1,29 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ChevronDown, MessageCircle, Mail, Phone, HelpCircle,  } from "lucide-react"
+import { useState, useRef, useEffect, useMemo } from "react"
+import { Card } from "@/components/ui/card"
+import { ChevronDown } from "lucide-react"
 import { categories, faqData } from "@/public/fakeData/fakeData"
-
-
+import { useMounted } from "@/hooks/use-mounted"
 
 // Floating particles component
 function FloatingParticle({ delay, size, color }: { delay: number; size: number; color: string }) {
+  const [style] = useState(() => ({
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    animationDelay: Math.random() * 4,
+    animationDuration: 3 + Math.random() * 4,
+  }))
   return (
     <div
       className={`absolute rounded-full ${color} animate-pulse opacity-20`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        animationDelay: `${delay}s`,
-        animationDuration: `${3 + Math.random() * 4}s`,
+        left: `${style.left}%`,
+        top: `${style.top}%`,
+        animationDelay: `${delay + style.animationDelay}s`,
+        animationDuration: `${style.animationDuration}s`,
       }}
     />
   )
@@ -209,7 +213,6 @@ function CategoryTab({
   )
 }
 
-
 export default function FAQSection() {
   const [activeCategory, setActiveCategory] = useState("general")
   const [openFAQ, setOpenFAQ] = useState<number | null>(1) // First FAQ open by default
@@ -248,6 +251,16 @@ export default function FAQSection() {
   const leftColumnFAQs = currentFAQs.filter((_, index) => index % 2 === 0)
   const rightColumnFAQs = currentFAQs.filter((_, index) => index % 2 !== 0)
 
+  const mounted = useMounted()
+  const particles = useMemo(() => {
+    if (!mounted) return []
+    const colors = ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-pink-400", "bg-cyan-400"]
+    return Array.from({ length: 30 }).map(() => ({
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }))
+  }, [mounted])
+
   return (
     <section id="faq" ref={sectionRef} className="relative py-20 lg:py-32 bg-black overflow-hidden">
       {/* Enhanced background effects */}
@@ -269,21 +282,14 @@ export default function FAQSection() {
         />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
-          <FloatingParticle
-            key={i}
-            delay={i * 0.3}
-            size={Math.random() * 8 + 4}
-            color={
-              ["bg-purple-400", "bg-blue-400", "bg-green-400", "bg-pink-400", "bg-cyan-400"][
-                Math.floor(Math.random() * 5)
-              ]
-            }
-          />
-        ))}
-      </div>
+      {/* Floating particles (client-only to avoid hydration mismatch) */}
+      {mounted && (
+        <div className="absolute inset-0">
+          {particles.map((p, i) => (
+            <FloatingParticle key={i} delay={i * 0.3} size={p.size} color={p.color} />
+          ))}
+        </div>
+      )}
 
       {/* Scanning lines */}
       <div className="absolute inset-0">
@@ -311,7 +317,7 @@ export default function FAQSection() {
           <div className="inline-flex items-center space-x-4 mb-8">
             <div className="w-16 h-px bg-gradient-to-r from-transparent to-purple-400" />
             <span className="text-purple-300 text-base font-bold tracking-wider uppercase bg-purple-900/20 px-4 py-2 rounded-full border border-purple-400/30">
-            FAQ
+              FAQ
             </span>
             <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
